@@ -5,7 +5,9 @@
 ## Project Description
 We decide on coding a graphing calculator because we all hate using our own calculators. It does not have the processing power. To implement this graphing calculator, we plan to use c++ and Qt Creator for c++. We will also use middle school level algebra. The input is some 2-variable equation. The output is a visual graph of the equation.
 
- In terms of design patterns we plan to use Singleton for the graph gui, because we only want one instance of the graph. The graph will also handle multiple lines, which means it will need to interact with all the other classes. We will use Strategy for the user input, which will interpret the equation that the user inputs. Since the user will input a string, it is useful to have multiple functions to help translate the string into something the graph and read. This translation will be passed to the graph's global access point.
+* [qt](https://www.qt.io/) - C++ IDE GUI toolkit
+
+In terms of design patterns we plan to use Singleton for the graph gui, because we only want one instance of the graph. The graph will also handle multiple lines, which means it will need to interact with all the other classes. We will use Strategy for the user input, which will interpret the equation that the user inputs. Since the user will input a string, it is useful to have multiple functions to help translate the string into something the graph and read. This translation will be passed to the graph's global access point.
  We will use Composite for the application window because all onscreen item are treated as classes in qt. The application window will be composed of the graph box, the input box, and other buttons for features that are yet to be implemented. It will handle the instantiation and deletion of these classes.
 
  > ## Phase II
