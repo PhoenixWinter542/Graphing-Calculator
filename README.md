@@ -1,6 +1,6 @@
 # World's Best Graphing Calculator
  
- > Authors: \<[Edward Xia](https://github.com/dfire42) [Justin Pham](https://github.com/pjsrcool) [Phoenix Winter](https://github.com/PhoenixWinter542)\>
+ > Authors: \<[Edward Xia](https://github.com/dfire42), [Justin Pham](https://github.com/pjsrcool), [Phoenix Winter](https://github.com/PhoenixWinter542)\>
 
 ## Project Description
 We decide on coding a graphing calculator because we all hate using our own calculators. It does not have the processing power. To implement this graphing calculator, we plan to use c++ and Qt Creator for c++. We will also use middle school level algebra. The input is some 2-variable equation. The output is a visual graph of the equation.
