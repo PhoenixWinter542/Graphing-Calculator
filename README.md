@@ -1,32 +1,8 @@
-
- > As you complete each section you **must** remove the prompt text. Every *turnin* of this project includes points for formatting of this README so keep it clean and keep it up to date. 
- > Prompt text is any lines beginning with "\<"
- > Replace anything between \<...\> with your project specifics and remove angle brackets. For example, you need to name your project and replace the header right below this line with that title (no angle brackets). 
 # World's Best Graphing Calculator
- > Your author list below should include links to all members GitHub and should begin with a "\<" (remove existing author).
  
- > Authors: [Edward Xia](https://github.com/dfire42) [Justin Pham](https://github.com/pjsrcool) [Phoenix Winter](https://github.com/PhoenixWinter542)
- 
- > You will be forming a group of **THREE** students and work on an interesting project that you will propose yourself (in this `README.md` document). You can pick any project that you'd like, but it needs ot implement three design patterns. Each of the members in a group is expected to work on at least one design pattern and its test cases. You can, of course, help each other, but it needs to be clear who will be responsible for which pattern and for which general project features.
- 
- > ## Expectations
- > * Incorporate **three** distinct design patterns, *two* of the design patterns need to be taught in this course:
- >   * Composite, Strategy, Abstract Factory, Visitor
- > * All three design patterns need to be linked together (it can't be three distinct projects)
- > * Your project should be implemented in C/C++. If you wish to choose anoher programming language (e.g. Java, Python), please discuss with your lab TA to obtain permission.
- > * You can incorporate additional technologies/tools but they must be approved (in writing) by the instructor or the TA.
- > * Each member of the group **must** be committing code regularly and make sure their code is correctly attributed to them. We will be checking attributions to determine if there was equal contribution to the project.
+ > Authors: \<[Edward Xia](https://github.com/dfire42) [Justin Pham](https://github.com/pjsrcool) [Phoenix Winter](https://github.com/PhoenixWinter542)\>
 
 ## Project Description
- > Your project description should summarize the project you are proposing. Be sure to include
- > * Why is it important or interesting to you?
- > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
- >   * [toolname](link) - Short description
- > * What will be the input/output of your project?
- > * What are the three design patterns you will be using. For each design pattern you must:
- >   * Explain in 3 - 5 sentences why you picked this pattern and what feature you will implement with it
- > * This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
-
 We decide on coding a graphing calculator because we all hate using our own calculators. It does not have the processing power. To implement this graphing calculator, we plan to use c++ and Qt Creator for c++. We will also use middle school level algebra. The input is some 2-variable equation. The output is a visual graph of the equation.
 
  In terms of design patterns we plan to use Singleton for the graph gui, because we only want one instance of the graph. The graph will also handle multiple lines, which means it will need to interact with all the other classes. We will use Strategy for the user input, which will interpret the equation that the user inputs. Since the user will input a string, it is useful to have multiple functions to help translate the string into something the graph and read. This translation will be passed to the graph's global access point.
