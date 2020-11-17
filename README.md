@@ -23,16 +23,22 @@ Proposed Features:
 
 Design Patterns
 * Strategy:
-  - 2 different functions to interpret the equation input by the user
+  - We are using the strategy pattern for the equation interpreter, as we plan to develop several algorithms based on the type of function given by the user.
+  - There will be an interpreter algorithm for each type of equation we support.
   - This makes interpreting the user input much simpler than having a large function inside the input class.
+
 * Iterator:
-  - Used to traverse the list of stored equations
-  - Each line is represented with 3 objects, so creating our own iterators will make traversing them much easier.
+  - Iterator will be used to more easily traverse the list of equations and the objects attributed to each one.
+  - Simplifies iterating through the elements required for each line.
+  - A standard iterator means that we can safely assume iteration will produce the same result regardless of where it was called.
+  - If we need to change the iteration, it is easier and safer if the process is centralized and isolated.
+
 * Mediator:
-  - By consolidating the control system to a single class, we can ensure that all function calls operate the same way
-  - Or
-  - Ensures all function calls perform the same operations
-  - Simplifies 
+  - We will be implementing the mediator pattern in our user interface and the way it interacts with the backend.
+  - By consolidating the control system to a single class, we can ensure there is no redundant code, or even different implementations of the same thing.
+  - It makes it easier to add the functionality we want to do if we have the extra time.
+  - Allows us to ensure functions are called in the proper order.
+
 
 ## Class Diagram
  Strategy
