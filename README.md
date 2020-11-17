@@ -22,6 +22,8 @@ Proposed Features:
 * Higher exponents
 * Logarithmic support
 * Display Points on mouseover
+* Zoom to rescale the graph
+* Restrict the range of an equation
 
 Design Patterns
 * Strategy:
