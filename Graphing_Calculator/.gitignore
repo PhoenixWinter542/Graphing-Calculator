@@ -71,3 +71,5 @@ Thumbs.db
 *.dll
 *.exe
 
+#language file
+Graphing_Calculator_en_US.ts
