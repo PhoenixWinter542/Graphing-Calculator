@@ -8,8 +8,8 @@ We decide on coding a graphing calculator because we all hate using our own calc
 
 Main Features:
 * - Graph an equation
-    - x^1
-    - x^2
+    - x<sup>1</sup>
+    - x<sup>2</sup>
 - Hold multiple equations
 - Display multiple equations simultaneously
 - Simplify equations automatically
@@ -20,6 +20,8 @@ Main Features:
 Proposed Features:
 * Multiple variable functions
 * Higher exponents
+* Logarithmic support
+* Display Points on mouseover
 
 Design Patterns
 * Strategy:
