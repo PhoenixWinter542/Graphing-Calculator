@@ -3,26 +3,45 @@
  > Authors: \<[Edward Xia](https://github.com/dfire42), [Justin Pham](https://github.com/pjsrcool), [Phoenix Winter](https://github.com/PhoenixWinter542)\>
 
 ## Project Description
-We decide on coding a graphing calculator because we all hate using our own calculators. It does not have the processing power. To implement this graphing calculator, we plan to use c++ and Qt Creator for c++. We will also use middle school level algebra. The input is some 2-variable equation. The output is a visual graph of the equation.
-
+We decide on coding a graphing calculator because we all hate using our own calculators. It does not have the processing power. To implement this graphing calculator, we plan to use c++ and Qt Creator for c++. We will also use middle school level algebra.
 * [qt](https://www.qt.io/) - C++ IDE GUI toolkit
 
-In terms of design patterns we plan to use Singleton for the graph gui, because we only want one instance of the graph. The graph will also handle multiple lines, which means it will need to interact with all the other classes. We will use Strategy for the user input, which will interpret the equation that the user inputs. Since the user will input a string, it is useful to have multiple functions to help translate the string into something the graph and read. This translation will be passed to the graph's global access point.
- We will use Composite for the application window because all onscreen item are treated as classes in qt. The application window will be composed of the graph box, the input box, and other buttons for features that are yet to be implemented. It will handle the instantiation and deletion of these classes.
+Main Features:
+* - Graph an equation
+    - x^1
+    - x^2
+- Hold multiple equations
+- Display multiple equations simultaneously
+- Simplify equations automatically
+- GUI based interface
+- Input: linear or quadratic equation
+- Output: visual graph of the equation
 
- > ## Phase II
- > In addition to completing the "Class Diagram" section below, you will need to 
- > * Set up your GitHub project board as a Kanban board for the project. It should have columns that map roughly to 
- >   * Backlog, TODO, In progress, In testing, Done
- >   * You can change these or add more if you'd like, but we should be able to identify at least these.
- > * There is no requirement for automation in the project board but feel free to explore those options.
- > * Create an "Epic" (note) for each feature and each design pattern and assign them to the appropriate team member. Place these in the `Backlog` column
- > * Complete your first *sprint planning* meeting to plan out the next 7 days of work.
- >   * Create smaller development tasks as issues and assign them to team members. Place these in the `Backlog` column.
- >   * These cards should represent roughly 7 days worth of development time for your team, taking you until your first meeting with the TA
+Proposed Features:
+* Multiple variable functions
+* Higher exponents
+
+Design Patterns
+* Strategy:
+  - 2 different functions to interpret the equation input by the user
+  - This makes interpreting the user input much simpler than having a large function inside the input class.
+* Iterator:
+  - Used to traverse the list of stored equations
+  - Each line is represented with 3 objects, so creating our own iterators will make traversing them much easier.
+* Mediator:
+  - By consolidating the control system to a single class, we can ensure that all function calls operate the same way
+  - Or
+  - Ensures all function calls perform the same operations
+  - Simplifies 
+
 ## Class Diagram
- > Include a class diagram(s) for each design pattern and a description of the diagram(s). This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper OMT notation (as discussed in the course slides). You may combine multiple design patterns into one diagram if you'd like, but it needs to be clear which portion of the diagram represents which design pattern (either in the diagram or in the description). 
- 
+ Strategy
+ ![Alt text](Strategy_Interpret_User_Input.jpeg?raw=true "Strategy")
+ Iterator
+ ![Alt text](Iterator_Draw_Graph.jpeg?raw=true "Iterator")
+ Mediator
+ ![Alt text](Mediator_GUI.jpeg?raw=true "Mediator")
+
  > ## Phase III
  > You will need to schedule a check-in with the TA (during lab hours or office hours). Your entire team must be present. 
  > * Before the meeting you should perform a sprint plan like you did in Phase II
