@@ -73,3 +73,6 @@ Thumbs.db
 
 #language file
 Graphing_Calculator_en_US.ts
+
+#CMake generated file
+CMakeLists.txt.user
