@@ -17,8 +17,8 @@
    <widget class="QComboBox" name="EquationList">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>500</y>
+      <x>160</x>
+      <y>490</y>
       <width>181</width>
       <height>26</height>
      </rect>
@@ -27,8 +27,8 @@
    <widget class="QLineEdit" name="EnterEquation">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>470</y>
+      <x>450</x>
+      <y>460</y>
       <width>158</width>
       <height>26</height>
      </rect>
@@ -37,8 +37,8 @@
    <widget class="QPushButton" name="DrawButton">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>500</y>
+      <x>450</x>
+      <y>490</y>
       <width>158</width>
       <height>26</height>
      </rect>
@@ -50,8 +50,8 @@
    <widget class="QLabel" name="EnterEquationLabel">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>470</y>
+      <x>420</x>
+      <y>460</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -63,14 +63,24 @@
    <widget class="QLabel" name="EquationListLabel">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>470</y>
+      <x>160</x>
+      <y>460</y>
       <width>121</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
      <string>Previous Lines</string>
+    </property>
+   </widget>
+   <widget class="GraphArea" name="graph" native="true">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>90</y>
+      <width>471</width>
+      <height>311</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -86,6 +96,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphArea</class>
+   <extends>QWidget</extends>
+   <header>grapharea.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
