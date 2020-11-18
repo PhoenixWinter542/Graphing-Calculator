@@ -35,6 +35,7 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    grapharea.cpp
     ${TS_FILES}
   )
 else()
@@ -43,6 +44,9 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    grapharea.cpp
+    grapharea.h
+    grapharea.ui
     ${TS_FILES}
   )
 endif()
