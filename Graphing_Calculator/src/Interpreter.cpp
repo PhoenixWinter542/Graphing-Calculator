@@ -10,9 +10,14 @@ void Interpreter::simplify()
 
 void Interpreter::simplify(string inputEq)
 {
+	inputEq = "(x+31*5)(3/5+1-72)";
 	cout << inputEq << "\n\n";
-	inputEq = this->removeSpaces(inputEq);
-	inputEq = this->handleParenthesis(inputEq);
+	inputEq = this->distributeMult("x+31*5", "3/5+1-72");
+
+	//inputEq = this->removeSpaces(inputEq);
+	//inputEq = this->handleParenthesis(inputEq);
+
+
 	cout << "\n " << inputEq << "\n";
 }
 
@@ -26,7 +31,7 @@ string Interpreter::removeSpaces(string inputEq)
 	return inputEq;
 }
 
-string Interpreter::handleParenthesis(string inputEq)
+string Interpreter::handleParenthesis(string inputEq)	//Doesn't handle distributive property
 {
 	int openParen = 0;		//Used to track how many open parenthesis have been found	|	parenFound(+1 if open, -1 if closed)
 	int parenStart;			//Tracks location of initial openParen
@@ -50,8 +55,8 @@ string Interpreter::handleParenthesis(string inputEq)
 						i--; parenStart--;	//Adjusts for deletion of leading '-'
 						temp = this->distributeNeg(temp);
 						break;
-					case ')':	//Just multiplication, will drop down into the * case
-					case '*':
+					case '*':	//Same as ), will drop down into the ) case
+					case ')':
 
 						break;
 					case '/':
@@ -72,6 +77,51 @@ string Interpreter::handleParenthesis(string inputEq)
 	return inputEq;
 }
 
+vector<string> Interpreter::getVals(string inputEq)
+{
+	vector<string> parenVals;
+	bool digitStarted = false;
+	int firstPos = 0;
+	for (int i = 0; i < inputEq.size(); i++)
+	{
+		char val = inputEq.at(i);
+		if (isdigit(val) || val == '.' || isalpha(val))
+		{
+			if (digitStarted == false)
+			{
+				digitStarted = true;
+				firstPos = i;
+				if (i != 0 && inputEq.at(i - 1) == '-')
+					firstPos--;
+			}
+		}
+		if (i != 0 && val == '+' || val == '-')
+		{
+			digitStarted = false;
+			parenVals.push_back(inputEq.substr(firstPos, i - firstPos));
+			cout << inputEq.substr(firstPos, i - firstPos) << "\n";
+		}
+	}
+	parenVals.push_back(inputEq.substr(firstPos, inputEq.size() - firstPos));
+	cout << inputEq.substr(firstPos, inputEq.size() - firstPos) << "\n";
+	return parenVals;
+}
+
+string Interpreter::distributeMult(string parenLeft, string parenRight)
+{
+	vector<string> parenValsLeft = this->getVals(parenLeft), parenValsRight = this->getVals(parenRight);
+	string result = "";
+	for (int i = 0; i < parenValsLeft.size(); i++)
+	{
+		for (int j = 0; j < parenValsRight.size(); j++)
+		{
+			result += parenValsLeft[i] + "*" + parenValsRight[j] + "+";
+		}
+	}
+	result.pop_back();
+	return result;
+}
+
 string Interpreter::distributeNeg(string inputEq)
 {
 	bool firstDigit = true;
@@ -79,13 +129,24 @@ string Interpreter::distributeNeg(string inputEq)
 	{
 		if (isdigit(inputEq.at(i)))
 		{
+			if (i == 0)
+			{
+				inputEq.insert(0, 1, '+');	//Second if() assumes a sign is given
+				i++;
+			}
 			if (firstDigit == true)
 			{
 				firstDigit = false;
-				if (i != 0)
-					if (inputEq.at(i - 1) == '+')
-						inputEq.erase(i-- - 1, 1);
-				inputEq.insert(i, 1, '-');
+				if (inputEq.at(i - 1) == '+')	//flips sign to negative
+				{
+					inputEq.erase(--i, 1);
+					inputEq.insert(i, 1, '-');
+				}
+				else if (inputEq.at(i - 1) == '-')	//flips sign to positive
+				{
+					inputEq.erase(--i, 1);
+					inputEq.insert(i, 1, '+');
+				}
 			}
 		}
 		else

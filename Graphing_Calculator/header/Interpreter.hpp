@@ -23,6 +23,8 @@ protected:
 	string removeSpaces(string inputEq);
 	string handleParenthesis(string inputEq);
 	string distributeNeg(string inputEq);
+	string distributeMult(string parenLeft, string parenRight);
+	vector<string> getVals(string inputEq);
 
 public:
 	//constructors
