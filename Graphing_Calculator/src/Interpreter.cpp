@@ -5,9 +5,9 @@ using std::cout;
 
 HandleVars* Interpreter::getParsedEquation(string eq)
 {
-	cout << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
+	cout << "getParsed\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 	eq = this->removeSpaces(eq);
-	cout << eq << "\n";		//<<<<<<<<----------------------------------------------------------
+	cout << "getParsed:\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 	eq = this->findParenthesis(eq);
 	return new NoVar();		//<<<<-------------------------Needs Changed-------------------------------------
 }
@@ -28,7 +28,7 @@ Finds the locations of outer parenthesis and passes them to handleParenthesis
 */
 string Interpreter::findParenthesis(string eq)
 {
-	cout << "\n\t\t\t\t\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
+	cout << "\n\t\t\t\tTop\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 	vector<vector<int>> parenLocations;
 	int openParen = 0;		//Used to track how many open parenthesis have been found	|	parenFound(+1 if open, -1 if closed)
 	vector<int> paren;			//Tracks location of both parenthesis 0='(' 1=')'
@@ -42,11 +42,11 @@ string Interpreter::findParenthesis(string eq)
 			{
 				paren.push_back(i);
 				parenLocations.push_back(paren);
-				cout << "\t\t\t\t\t" << eq.substr(paren[0],  1 + paren[1]) << "\n"; //<<<<<<<<----------------------------------------------------------
+				cout << "\t\t\t\tMid\t" << eq.substr(paren[0],  1 + paren[1]) << "\n"; //<<<<<<<<----------------------------------------------------------
 				paren.clear();
 			}
 	}
-	cout << "\t\t\t\t\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
+	cout << "\t\t\t\tEnd\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 	if (parenLocations.empty())
 		return eq;
 	return handleParenthesis(eq, parenLocations);		//There were parenthesis inside the parenthesis
@@ -82,7 +82,7 @@ string Interpreter::handleParenthesis(string eq, vector<vector<int>> parenLocati
 				eq.replace(parenLocations[i][0], 1 + parenLocations[i+1][1] - parenLocations[i][0], this->distributePow(this->findParenthesis(eq.substr(parenLocations[i][0] + 1, parenLocations[i][1])), exponent));
 				parenLocations = this->adjustLocation(parenLocations, eq.size() - originalSize, i);
 				parenLocations.erase(parenLocations.begin() + i--);
-				cout << "\t" << eq << "\n\n";	//<<<<<<<<----------------------------------------------------------
+				cout << "handleParenthesis:\t" << eq << "\n\n";	//<<<<<<<<----------------------------------------------------------
 			}
 		}
 	}
@@ -114,7 +114,7 @@ string Interpreter::handleParenthesis(string eq, vector<vector<int>> parenLocati
 						eq.replace(parenLocations[i][1] + 2, 1 + parenLocations[i + 1][1], "+" + this->distributeNeg(this->findParenthesis(eq.substr(parenLocations[i + 1][0] + 1, parenLocations[i + 1][1]))));
 						parenLocations = this->adjustLocation(parenLocations, eq.size() - originalSize, i);
 						originalSize = parenLocations.size();
-						cout << "\t\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
+						cout << "handle-Mult:\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 					}
 					if (eq.at(parenLocations[i][1] + 2) == '+')
 						run = true;
@@ -124,14 +124,14 @@ string Interpreter::handleParenthesis(string eq, vector<vector<int>> parenLocati
 				run = true;
 			if (run)
 			{
-				eq.replace(parenLocations[i][0], 1 + parenLocations[i + 1][1] - parenLocations[i][0], this->distributeMult(this->findParenthesis(eq.substr(parenLocations[i][0] + 1, parenLocations[i][1])), this->findParenthesis(eq.substr(parenLocations[i + 1][0] + 1, parenLocations[i + 1][1]))));
+				eq.replace(parenLocations[i][0], 1 + parenLocations[i + 1][1] - parenLocations[i][0], this->distributeMult(this->findParenthesis(eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - 1 - parenLocations[i][0])), this->findParenthesis(eq.substr(parenLocations[i + 1][0] + 1, parenLocations[i + 1][1] - 1 - parenLocations[i + 1][0]))));
 				parenLocations = this->adjustLocation(parenLocations, eq.size() - originalSize, i);
 				parenLocations.erase(parenLocations.begin() + i--);
-				cout << "\t\t\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
+				cout << "handleMult:\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 			}
 		};
 	}
-	for (int i = 0; i < parenLocations.size(); i++)
+	for (int i = 0; i < parenLocations.size(); i++)		//Handles distributing negatives
 	{
 		if (parenLocations[i][0] > 0 && eq.at(parenLocations[i][0] - 1) == '-')
 		{
@@ -145,10 +145,10 @@ string Interpreter::handleParenthesis(string eq, vector<vector<int>> parenLocati
 			eq.replace(parenLocations[i][0], 1 + parenLocations[i][1] - parenLocations[i][1], this->distributeNeg(this->findParenthesis(eq.substr(parenLocations[i][0], 1 + parenLocations[i][1] - parenLocations[i][0]))));
 			parenLocations = this->adjustLocation(parenLocations, eq.size() - originalSize, i);
 			parenLocations.erase(parenLocations.begin() + i--);
-			cout << "\t\t\t\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
+			cout << "handleNeg:\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 		}
 	}
-	cout << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
+	cout << "finishedParen:\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 	return eq;
 	//int openParen = 0;		//Used to track how many open parenthesis have been found	|	parenFound(+1 if open, -1 if closed)
 	//int parenStart = 0;		//Tracks location of initial openParen
@@ -244,6 +244,8 @@ string Interpreter::distributeMult(string parenLeft, string parenRight)
 		for (int j = 0; j < parenValsRight.size(); j++)
 		{
 			result += parenValsLeft[i] + "*" + parenValsRight[j] + "+";
+			cout << "distributeMult:\t" << result << "\n";		//<<<<<<<<----------------------------------------------------------
+
 		}
 	}
 	result.pop_back();
@@ -277,10 +279,10 @@ vector<string> Interpreter::getVals(string eq)
 		{
 			digitStarted = false;
 			parenVals.push_back(eq.substr(firstPos, i - firstPos));
-			cout << eq.substr(firstPos, i - firstPos) << "\n";
+			cout << "getVals\tTop:\t" << eq.substr(firstPos, i - firstPos) << "\n";
 		}
 	}
 	parenVals.push_back(eq.substr(firstPos, eq.size() - firstPos));
-	cout << eq.substr(firstPos, eq.size() - firstPos) << "\n";
+	cout << "getVals\tEnd:\t" << eq.substr(firstPos, eq.size() - firstPos) << "\n";
 	return parenVals;
 }

@@ -17,8 +17,10 @@ protected:
 	string removeSpaces(string eq);
 	string handleParenthesis(string eq, vector<vector<int>> parenLocations);
 	string findParenthesis(string eq);
+	vector<vector<int>> adjustLocation(vector<vector<int>> parenLocations, int change, int i);
 	string distributeNeg(string eq);
 	string distributeMult(string parenLeft, string parenRight);
+	string distributePow(string parenLeft, string parenRight);
 	vector<string> getVals(string eq);
 
 public:
