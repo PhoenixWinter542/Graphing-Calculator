@@ -87,34 +87,37 @@ void NoVar::fillOp(string inputEq)
 	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size() + paren.size();		//This might need to change if parenthesis are handled differently
 	int startLocation = 0;
 	vector<int> searchOp;
-	for (int i = 0; i < runtime; i++);
+	if (runtime > 0)		//for loop runs when runtime == 0 otherwise
 	{
-		if (!paren.empty())
+		for (int i = 0; i < runtime; i++);
 		{
-			searchOp = paren;
+			if (!paren.empty())
+			{
+				searchOp = paren;
+			}
+			else if (!pow.empty())
+			{
+				searchOp = pow;
+			}
+			else if (!mult.empty())		//Mult before division in an attempt to reduce decimals
+			{
+				searchOp = mult;
+			}
+			else if (!div.empty())
+			{
+				searchOp = div;
+			}
+			else if (!sub.empty())
+			{
+				searchOp = sub;
+			}
+			else if (!add.empty())
+			{
+				searchOp = add;
+			}
+			this->eq.push_back(this->getDouble(inputEq, searchOp[0]));
+			searchOp.erase(searchOp.begin());
 		}
-		else if (!pow.empty())
-		{
-			searchOp = pow;
-		}
-		else if (!mult.empty())		//Mult before division in an attempt to reduce decimals
-		{
-			searchOp = mult;
-		}
-		else if (!div.empty())
-		{
-			searchOp = div;
-		}
-		else if (!sub.empty())
-		{
-			searchOp = sub;
-		}
-		else if (!add.empty())
-		{
-			searchOp = add;
-		}
-		this->eq.push_back(this->getDouble(inputEq, searchOp[0]));
-		searchOp.erase(searchOp.begin());
 	}
 }
 
