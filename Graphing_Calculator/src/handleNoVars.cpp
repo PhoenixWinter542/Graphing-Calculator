@@ -1,4 +1,4 @@
-#include "..\header\NoVariableInterpreter.hpp"
+#include "../header/handleNoVars.hpp"
 #include <iostream>
 using std::cout;
 
@@ -49,6 +49,11 @@ NoVar::Op NoVar::getDouble(string inputEq, int start)		//Might be the only funct
 			return result;
 		}
 	}
+}
+
+vector<double> NoVar::getPoint()
+{
+	return vector<double>();
 }
 
 
