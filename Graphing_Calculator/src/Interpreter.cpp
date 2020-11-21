@@ -10,10 +10,9 @@ void Interpreter::simplify()
 
 void Interpreter::simplify(string inputEq)
 {
-	inputEq = "(x+31*5)(3/5+1-72)";
+	//inputEq = "(x+31*5)(3/5+1-72)";
 	cout << inputEq << "\n\n";
 	inputEq = this->distributeMult("x+31*5", "3/5+1-72");
-
 	//inputEq = this->removeSpaces(inputEq);
 	//inputEq = this->handleParenthesis(inputEq);
 
@@ -77,50 +76,16 @@ string Interpreter::handleParenthesis(string inputEq)	//Doesn't handle distribut
 	return inputEq;
 }
 
-vector<string> Interpreter::getVals(string inputEq)
+Interpreter::Interpreter(string inputEq)
 {
-	vector<string> parenVals;
-	bool digitStarted = false;
-	int firstPos = 0;
-	for (int i = 0; i < inputEq.size(); i++)
-	{
-		char val = inputEq.at(i);
-		if (isdigit(val) || val == '.' || isalpha(val))
-		{
-			if (digitStarted == false)
-			{
-				digitStarted = true;
-				firstPos = i;
-				if (i != 0 && inputEq.at(i - 1) == '-')
-					firstPos--;
-			}
-		}
-		if (i != 0 && val == '+' || val == '-')
-		{
-			digitStarted = false;
-			parenVals.push_back(inputEq.substr(firstPos, i - firstPos));
-			cout << inputEq.substr(firstPos, i - firstPos) << "\n";
-		}
-	}
-	parenVals.push_back(inputEq.substr(firstPos, inputEq.size() - firstPos));
-	cout << inputEq.substr(firstPos, inputEq.size() - firstPos) << "\n";
-	return parenVals;
+	this->inputEq = inputEq;
+	this->simplify();
 }
 
-string Interpreter::distributeMult(string parenLeft, string parenRight)
-{
-	vector<string> parenValsLeft = this->getVals(parenLeft), parenValsRight = this->getVals(parenRight);
-	string result = "";
-	for (int i = 0; i < parenValsLeft.size(); i++)
-	{
-		for (int j = 0; j < parenValsRight.size(); j++)
-		{
-			result += parenValsLeft[i] + "*" + parenValsRight[j] + "+";
-		}
-	}
-	result.pop_back();
-	return result;
-}
+
+//-------------------Here Lies Possibly Unnessesary Functions-------------------
+
+
 
 string Interpreter::distributeNeg(string inputEq)
 {
@@ -155,8 +120,48 @@ string Interpreter::distributeNeg(string inputEq)
 	return inputEq;
 }
 
-Interpreter::Interpreter(string inputEq)
+
+string Interpreter::distributeMult(string parenLeft, string parenRight)
 {
-	this->inputEq = inputEq;
-	this->simplify();
+	vector<string> parenValsLeft = this->getVals(parenLeft), parenValsRight = this->getVals(parenRight);
+	string result = "";
+	for (int i = 0; i < parenValsLeft.size(); i++)
+	{
+		for (int j = 0; j < parenValsRight.size(); j++)
+		{
+			result += parenValsLeft[i] + "*" + parenValsRight[j] + "+";
+		}
+	}
+	result.pop_back();
+	return result;
+}
+
+vector<string> Interpreter::getVals(string inputEq)
+{
+	vector<string> parenVals;
+	bool digitStarted = false;
+	int firstPos = 0;
+	for (int i = 0; i < inputEq.size(); i++)
+	{
+		char val = inputEq.at(i);
+		if (isdigit(val) || val == '.' || isalpha(val))
+		{
+			if (digitStarted == false)
+			{
+				digitStarted = true;
+				firstPos = i;
+				if (i != 0 && inputEq.at(i - 1) == '-')
+					firstPos--;
+			}
+		}
+		if (i != 0 && val == '+' || val == '-')
+		{
+			digitStarted = false;
+			parenVals.push_back(inputEq.substr(firstPos, i - firstPos));
+			cout << inputEq.substr(firstPos, i - firstPos) << "\n";
+		}
+	}
+	parenVals.push_back(inputEq.substr(firstPos, inputEq.size() - firstPos));
+	cout << inputEq.substr(firstPos, inputEq.size() - firstPos) << "\n";
+	return parenVals;
 }
