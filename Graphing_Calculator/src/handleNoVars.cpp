@@ -114,33 +114,3 @@ void NoVar::fillOp(string inputEq)
 		}
 	}
 }
-
-//vector<string> Interpreter::getVals(string inputEq)
-//{
-//	vector<string> parenVals;
-//	bool digitStarted = false;
-//	int firstPos = 0;
-//	for (int i = 0; i < inputEq.size(); i++)
-//	{
-//		char val = inputEq.at(i);
-//		if (isdigit(val) || val == '.' || isalpha(val))
-//		{
-//			if (digitStarted == false)
-//			{
-//				digitStarted = true;
-//				firstPos = i;
-//				if (i != 0 && inputEq.at(i - 1) == '-')
-//					firstPos--;
-//			}
-//		}
-//		if (i != 0 && val == '+' || val == '-')
-//		{
-//			digitStarted = false;
-//			parenVals.push_back(inputEq.substr(firstPos, i - firstPos));
-//			cout << inputEq.substr(firstPos, i - firstPos) << "\n";
-//		}
-//	}
-//	parenVals.push_back(inputEq.substr(firstPos, inputEq.size() - firstPos));
-//	cout << inputEq.substr(firstPos, inputEq.size() - firstPos) << "\n";
-//	return parenVals;
-//}
