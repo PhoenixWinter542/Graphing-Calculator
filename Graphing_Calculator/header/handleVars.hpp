@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <vector>
 #include <string>
 
@@ -17,10 +19,13 @@ protected:
 		double left, right;
 		char op;
 	};
-	vector<Op> eq;
+	string eq;
+
+	double solveEquation(string eq);
 
 	virtual void fillOp(string inputEq) = 0;
 	virtual Op getDouble(string inputEq, int start) = 0;
+	HandleVars(string eq) { this->eq = eq; };
 
 public:
 	virtual vector<double> getPoint() = 0;

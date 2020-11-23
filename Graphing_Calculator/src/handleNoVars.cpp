@@ -53,7 +53,9 @@ NoVar::Op NoVar::getDouble(string inputEq, int start)		//Might be the only funct
 
 vector<double> NoVar::getPoint()
 {
-	return vector<double>();
+	vector<double> result;
+	result.push_back(this->solveEquation(this->eq));		//<<<<<<<<<<<<<<<<<<<<--------------------------------------Allows for early testing of other systems, unhelpfull otherwise
+	return result;
 }
 
 
@@ -79,9 +81,6 @@ void NoVar::fillOp(string inputEq)
 		case '^':
 			pow.push_back(i);
 			break;
-		case '(':
-			paren.push_back(i);
-			break;
 		}
 	}
 	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size() + paren.size();		//This might need to change if parenthesis are handled differently
@@ -89,13 +88,9 @@ void NoVar::fillOp(string inputEq)
 	vector<int> searchOp;
 	if (runtime > 0)		//for loop runs when runtime == 0 otherwise
 	{
-		for (int i = 0; i < runtime; i++);
+		for (int i = 0; i < runtime; i++)
 		{
-			if (!paren.empty())
-			{
-				searchOp = paren;
-			}
-			else if (!pow.empty())
+			if (!pow.empty())
 			{
 				searchOp = pow;
 			}
@@ -115,7 +110,6 @@ void NoVar::fillOp(string inputEq)
 			{
 				searchOp = add;
 			}
-			this->eq.push_back(this->getDouble(inputEq, searchOp[0]));
 			searchOp.erase(searchOp.begin());
 		}
 	}

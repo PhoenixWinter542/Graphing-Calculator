@@ -9,7 +9,8 @@ HandleVars* Interpreter::getParsedEquation(string eq)
 	eq = this->removeSpaces(eq);
 	cout << "getParsed:\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 	eq = this->findParenthesis(eq);
-	return new NoVar();		//<<<<-------------------------Needs Changed-------------------------------------
+	NoVar* test = new NoVar(eq);		//<<<<-------------------------Needs Changed-------------------------------------
+	return test;
 }
 
 string Interpreter::removeSpaces(string eq)
@@ -150,51 +151,6 @@ string Interpreter::handleParenthesis(string eq, vector<vector<int>> parenLocati
 	}
 	cout << "finishedParen:\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 	return eq;
-	//int openParen = 0;		//Used to track how many open parenthesis have been found	|	parenFound(+1 if open, -1 if closed)
-	//int parenStart = 0;		//Tracks location of initial openParen
-	//for (int i = 0; i < eq.size(); i++)
-	//{
-	//	if (eq.at(i) == '(')
-	//		if (openParen++ == 0)
-	//			parenStart = i;
-	//	if (eq.at(i) == ')')
-	//		if (--openParen == 0)
-	//		{
-	//			string temp = this->findParenthesis(eq.substr(parenStart + 1, i - 1 - parenStart));	//temp = simplified inner paren
-	//			if (parenStart != 0)		//Handle special cases in here
-	//				switch (eq.at(parenStart - 1))
-	//				{
-	//				case '+':
-	//					//Does anything even need to happen here?
-	//					break;
-	//				case '-':
-	//					eq.erase(parenStart - 1, 1);
-	//					i--; parenStart--;	//Adjusts for deletion of leading '-'
-	//					temp = this->distributeNeg(temp);
-	//					break;
-	//				case '*':	//Not needed?
-	//					break;
-	//				case ')':
-	//					if (i + 1 < eq.size())		//Guard against out of bounds
-	//						if (eq.at(i + 1) != '(' || i + 2 < eq.size() && eq.at(i + 1) == '*' && eq.at(i + 2) == '(')	//if its paren times paren ()*() or ()()
-	//							;
-	//					break;
-	//				case '/':
-
-	//					break;
-	//				case '^':
-
-	//					break;
-	//				}
-	//			if (parenStart != 0)
-	//				if (parenStart != 0 && eq.at(parenStart - 1) == '+' && eq.at(parenStart + 1) == '-')
-	//					eq.erase(parenStart - 1, 1);
-	//			eq.replace(parenStart, 1 + i - parenStart, temp);	//replaces old paren with new simplified version	|	removes outer parenthesis
-	//			i = i - 2;
-	//		}
-	//}
-	//cout << " " << eq << "\n";
-	//return eq;
 }
 
 
