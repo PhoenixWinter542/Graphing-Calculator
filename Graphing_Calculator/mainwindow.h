@@ -2,7 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "grapharea.h"
+#include <QLineEdit>
+#include <vector>
+#include "header/Interpreter.hpp"
+
+#include <iostream>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,8 +20,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_DrawButton_clicked();
+
+    void on_EquationList_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
-    GraphArea *graph;
 };
 #endif // MAINWINDOW_H
