@@ -17,8 +17,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_DrawButton_clicked()
 {
     ui->EquationList->addItem(ui->EnterEquation->text());
-
-    std::cout << ui->EnterEquation->text().toStdString();
 }
 
 void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
