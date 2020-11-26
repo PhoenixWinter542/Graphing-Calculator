@@ -51,11 +51,9 @@ NoVar::Op NoVar::getDouble(string inputEq, int start)		//Might be the only funct
 	}
 }
 
-vector<double> NoVar::getPoint()
+double NoVar::getPoint()
 {
-	vector<double> result;
-	result.push_back(this->solveEquation(this->eq));		//<<<<<<<<<<<<<<<<<<<<--------------------------------------Allows for early testing of other systems, unhelpfull otherwise
-	return result;
+	return this->solveEquation(this->eq);		//<<<<<<<<<<<<<<<<<<<<--------------------------------------Allows for early testing of other systems, unhelpfull otherwise
 }
 
 
