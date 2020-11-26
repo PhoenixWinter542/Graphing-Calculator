@@ -28,6 +28,6 @@ protected:
 	HandleVars(string eq) { this->eq = eq; };
 
 public:
-	virtual vector<double> getPoint() = 0;
-	virtual vector<double> getPoint(string somePoint) = 0;
+	virtual double getPoint() = 0;
+	virtual double getPoint(string somePoint) = 0;
 };
