@@ -33,6 +33,12 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Enter Equation Here</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="DrawButton">
     <property name="geometry">
