@@ -1,4 +1,4 @@
-#include "..\header\handleVars.hpp"
+#include "../header/handleVars.hpp"
 vector<int> solveOp(string &inputEq, int start)
 {
 	bool leftDone = false, rightDone = false;

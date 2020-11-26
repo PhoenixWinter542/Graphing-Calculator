@@ -47,6 +47,14 @@ else()
     grapharea.cpp
     grapharea.h
     grapharea.ui
+    header/Interpreter.hpp
+    header/handleNoVars.hpp
+    header/handleOneVar.hpp
+    header/handleVars.hpp
+    src/Interpreter.cpp
+    src/handleNoVars.cpp
+    src/handleOneVar.cpp
+    src/handleVars.cpp
     ${TS_FILES}
   )
 endif()
