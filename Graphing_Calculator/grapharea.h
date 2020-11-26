@@ -7,6 +7,8 @@
 #include <QPainterPath>
 #include <QPen>
 #include <QPaintDevice>
+#include <vector>
+#include <iostream>
 namespace Ui {
 class GraphArea;
 }
@@ -19,11 +21,14 @@ public:
     explicit GraphArea(QWidget *parent = nullptr);
     ~GraphArea();
 
-    void drawGraph(const std::vector<double>& x, const std::vector<double>& y);
+    void drawGraph(std::vector<double>& x, std::vector<double>& y);
 
     void paintEvent(QPaintEvent *);
 
 private:
+    std::vector<double> x;
+    std::vector<double> y;
+    bool graphExist;
     Ui::GraphArea *ui;
 };
 

@@ -6,6 +6,7 @@ GraphArea::GraphArea(QWidget *parent) :
     ui(new Ui::GraphArea)
 {
     ui->setupUi(this);
+    graphExist = false;
 }
 
 GraphArea::~GraphArea()
@@ -13,28 +14,25 @@ GraphArea::~GraphArea()
     delete ui;
 }
 
-void GraphArea::drawGraph(const std::vector<double>& x, const std::vector<double>& y)
+void GraphArea::drawGraph(std::vector<double>& x, std::vector<double>& y)
 {
-//    QPainterPath pp;
-//    QPainter brush;
-//    QLineF line(0,0, 300, 300);
-//    QPen pen(Qt::green, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-////    brush.begin(ui);
-//    brush.setPen(pen);
-//    brush.drawLine(line);
-
-//    pp.moveTo(QPointF(1,4));
-//    pp.lineTo(QPointF(40, 30));
-//    pp.moveTo(QPointF(40,30));
-//    pp.lineTo(QPointF(40, 200));
+    std::cout << "click recived\n";
+    this->x = x;
+    this->y = y;
+    this->graphExist = true;
     update();
 }
 
 void GraphArea::paintEvent(QPaintEvent *) {
-//    QPainterPath pp;
+    std::cout << "inside paint event\n";
     QPainter brush(this);
-    QLineF line(0,0, 300, 300);
-    QPen pen(Qt::green, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     brush.setPen(pen);
-    brush.drawLine(line);
+    if (this->graphExist == true) {
+        std::cout << "inside IF statement\n";
+        for (unsigned long i = 0; i < x.size() - 1; ++i) {
+            QLineF line(x.at(i), y.at(i), x.at(i+1), y.at(i+1));
+            brush.drawLine(line);
+        }
+    }
 }
