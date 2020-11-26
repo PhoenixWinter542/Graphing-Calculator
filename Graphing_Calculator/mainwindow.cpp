@@ -24,15 +24,15 @@ void MainWindow::on_DrawButton_clicked()
 void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
 {
     // generate points and graph
-    Interpreter III(ui->EnterEquation->text().toStdString());
-    std::vector<double> temp;
-    std::vector<double> temp2;
-    temp.push_back(3.2);
-    temp.push_back(43.55);
-    temp.push_back(300);
-    temp2.push_back(40);
-    temp2.push_back(100);
-    temp2.push_back(90);
+    Interpreter III(arg1.toStdString());
+    HandleVars *coords = III.getParsedEquation();
+    std::vector<double> x, y;
 
-    ui->graph->drawGraph(temp, temp2);
+    double input = 0;
+    while (input < 500) {
+        x.push_back(input);
+        y.push_back(coords->getPoint(std::to_string(input)));
+        input += .1;
+    }
+    ui->graph->drawGraph(x, y);
 }
