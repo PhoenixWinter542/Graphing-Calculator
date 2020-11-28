@@ -2,15 +2,9 @@
 #include <iostream>
 using std::cout;
 
-double NoVar::getPoint()
-{
-	return this->solveEquation(this->eq);		//<<<<<<<<<<<<<<<<<<<<--------------------------------------Allows for early testing of other systems, unhelpfull otherwise
-}
-
-
 void NoVar::fillOp(string inputEq)
 {
-	vector<int> add, sub, mult, div, pow, paren;
+	vector<int> add, sub, mult, div, pow;
 	for (int i = 0; i < inputEq.size(); i++)		//Gets the amount of each equation type
 	{
 		switch (inputEq.at(i))
@@ -32,7 +26,7 @@ void NoVar::fillOp(string inputEq)
 			break;
 		}
 	}
-	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size() + paren.size();		//This might need to change if parenthesis are handled differently
+	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size();
 	int startLocation = 0;
 	vector<int> searchOp;
 	if (runtime > 0)		//for loop runs when runtime == 0 otherwise

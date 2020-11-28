@@ -20,6 +20,5 @@ protected:
 	HandleVars(string eq) { this->eq = eq; };
 
 public:
-	virtual double getPoint() = 0;
 	virtual double getPoint(string somePoint) = 0;
 };
