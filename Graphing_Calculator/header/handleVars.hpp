@@ -16,7 +16,6 @@ protected:
 
 	double solveEquation(string eq);
 
-	virtual void fillOp(string inputEq) = 0;
 	HandleVars(string eq) { this->eq = eq; };
 
 public:
