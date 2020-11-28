@@ -2,55 +2,6 @@
 #include <iostream>
 using std::cout;
 
-//Only gets digits, no signs are taken		----------------BROKEN------------------
-NoVar::Op NoVar::getDouble(string inputEq, int start)		//Might be the only function that needs to be virtual?
-{
-	bool leftDone = false, rightDone = false;
-	Op result;
-	result.op = inputEq.at(start);
-	for (int i = 0; i < inputEq.size(); i++)		//Will go out of bounds if not checked
-	{
-		if (!leftDone)
-		{
-			if (start - i >= 0)
-			{
-				if (!isdigit(inputEq.at(start - i)))		//Likely cause of any issues with double operators eg.(*-), (--), or(+-)
-				{
-					leftDone = true;
-					result.left = stod(inputEq.substr(1 + start - i, i - 1));
-				}
-			}
-			else
-			{
-				leftDone = true;
-				result.left = stod(inputEq.substr(0, start));
-			}
-		}
-		if (!rightDone)
-		{
-			if (start + 1 < inputEq.size())
-			{
-				if (!isdigit(inputEq.at(start + 1)))
-				{
-					rightDone = true;
-					result.right = stod(inputEq.substr(start + 1, i - 1));
-				}
-			}
-			else
-			{
-				rightDone = true;
-				result.right = stod(inputEq.substr(start + 1, i - 1));
-			}
-		}
-
-		if (leftDone && rightDone)
-		{
-			cout << result.left << "\t" << result.op << "\t" << result.right << "\n";
-			return result;
-		}
-	}
-}
-
 double NoVar::getPoint()
 {
 	return this->solveEquation(this->eq);		//<<<<<<<<<<<<<<<<<<<<--------------------------------------Allows for early testing of other systems, unhelpfull otherwise

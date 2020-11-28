@@ -5,7 +5,6 @@ class NoVar :  public HandleVars
 {
 protected:
 	virtual void fillOp(string inputEq);
-	Op getDouble(string inputEq, int start);
 
 public:
 	//Constructors

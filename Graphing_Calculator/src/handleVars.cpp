@@ -157,8 +157,7 @@ double HandleVars::solveEquation(string eq)
 			break;
 		}
 	}
-	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size() + paren.size();		//This might need to change if parenthesis are handled differently
-	int startLocation = 0;
+	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size();
 	vector<int> searchOp;
 	if (runtime > 0)		//for loop runs when runtime == 0 otherwise
 	{
