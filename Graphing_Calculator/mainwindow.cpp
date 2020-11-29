@@ -17,6 +17,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_DrawButton_clicked()
 {
     ui->EquationList->addItem(ui->EnterEquation->text());
+    ui->EquationList->setCurrentIndex(ui->EquationList->count() - 1);
 }
 
 void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
