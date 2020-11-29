@@ -11,5 +11,5 @@ public:
 	OneVar(string inputEq) : HandleVars(inputEq) {}
 
 	//Accessors
-	virtual double getPoint(string somePoint) { somePoint; }
+	virtual double getPoint(string somePoint) { return this->solveEquation(this->enterVariable(somePoint)); }
 };

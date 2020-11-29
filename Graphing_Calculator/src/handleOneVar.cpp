@@ -4,13 +4,25 @@ using std::cout;
 
 string OneVar::enterVariable(string var)
 {
-	for (int i = 0; i < this->eq.length(); i++)
+	string localEq = this->eq;
+	for (int i = 0; i < localEq.length(); i++)
 	{
-		if (isalpha(this->eq.at(i)))
+		if (isalpha(localEq[i]))
 		{
-			this->eq.replace(i, 1, var);
+			string tempVar = var;
+			if (i > 0)
+			{
+				if (isdigit(localEq[i - 1]) || isalpha(localEq[i - 1]))
+					tempVar = '*' + tempVar;
+			}
+			if (i + 2 < localEq.length())
+			{
+				if (isdigit(localEq[i + 1]) || isalpha(localEq[i + 1]))
+					tempVar = tempVar +'*';
+			}
+			localEq.replace(i, 1, tempVar);
 		}
 	}
 
-	return string();
+	return localEq;
 }

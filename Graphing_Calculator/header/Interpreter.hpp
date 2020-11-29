@@ -10,6 +10,8 @@ using std::vector;
 
 class Interpreter
 {
+private:
+	int howManyVars(string eq);
 protected:
 	//data
 	string eq;
@@ -24,5 +26,5 @@ public:
 	HandleVars* getParsedEquation(string eq);
 
 	//mutators
-	void setEquation(string equation) { this->getParsedEquation(equation); };
+	void setEquation(string equation) { this->eq = equation; };
 };

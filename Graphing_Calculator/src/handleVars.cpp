@@ -103,9 +103,6 @@ vector<int> solveOp(string &inputEq, int start)
 			if (resString.at(resString.size() - 1) == '.')
 				resString.erase(resString.size() - 1, 1);
 
-			if (lPos > 0 && rPos < originalSize - 1)
-				inputEq.replace(lPos - 1, 1 + rPos - lPos, resString);		//Somewhere in the middle
-			else
 				inputEq.replace(lPos, 1 + rPos - lPos, resString);	//On either edge
 
 			vector<int> toReturn;
@@ -138,7 +135,9 @@ double HandleVars::solveEquation(string eq)
 			add.push_back(i);
 			break;
 		case '-':
-			sub.push_back(i);
+			if (i > 0)
+				if (isdigit(eq.at(i - 1)) || isalpha(eq.at(i - 1)))		//handles +- *- /- ^- --
+					sub.push_back(i);
 			break;
 		case '*':
 			mult.push_back(i);
