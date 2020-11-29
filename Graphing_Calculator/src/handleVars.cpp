@@ -35,14 +35,12 @@ vector<int> solveOp(string &inputEq, int start)
 				}
 				if (run)
 				{
-					std::cout << "lTop:\t" << inputEq.at((start - 1) - i) << "\t" << inputEq.substr(start - i, i) << "\n";
 					leftDone = true;
 					left = stod(inputEq.substr(lPos, i + 1));
 				}
 			}
 			else
 			{
-				std::cout << "lEnd:\tedge\t" << inputEq.substr(0, start) << "\n";
 				leftDone = true;
 				left = stod(inputEq.substr(0, start));
 				lPos = 0;
@@ -64,7 +62,6 @@ vector<int> solveOp(string &inputEq, int start)
 				}
 				if (run)
 				{
-					std::cout << "rTop:\t" << inputEq.at(start + 1 + i) << "\t" << inputEq.substr(start + 1, i) << "\n";
 					rightDone = true;
 					right = stod(inputEq.substr(start + 1, i));
 					rPos = start + i;
@@ -72,7 +69,6 @@ vector<int> solveOp(string &inputEq, int start)
 			}
 			else
 			{
-				std::cout << "rEnd:\tedge\t" << inputEq.substr(start + 1, i) << "\n";
 				rightDone = true;
 				right = stod(inputEq.substr(start + 1, i));
 				rPos = inputEq.size() - 1;
@@ -99,7 +95,6 @@ vector<int> solveOp(string &inputEq, int start)
 			case '^':
 				result = pow(left, right);
 			}
-			std::cout << left << "\t" << result << "\t" << right << "\n" << inputEq.substr(lPos, 1 + rPos - lPos) << "\n";
 			int originalSize = inputEq.size();
 
 			//remove any trailing zeros and the decimal point if whole number
@@ -108,15 +103,11 @@ vector<int> solveOp(string &inputEq, int start)
 			if (resString.at(resString.size() - 1) == '.')
 				resString.erase(resString.size() - 1, 1);
 
-			if (lPos > 0 && rPos < originalSize - 1)
-				inputEq.replace(lPos - 1, 1 + rPos - lPos, resString);		//Somewhere in the middle
-			else
 				inputEq.replace(lPos, 1 + rPos - lPos, resString);	//On either edge
 
 			vector<int> toReturn;
 			toReturn.push_back(inputEq.size() - originalSize);
 			toReturn.push_back(rPos);
-			std::cout << inputEq << "\t\t" << resString << "\n\n";
 			return toReturn;
 		}
 	}
@@ -144,7 +135,9 @@ double HandleVars::solveEquation(string eq)
 			add.push_back(i);
 			break;
 		case '-':
-			sub.push_back(i);
+			if (i > 0)
+				if (isdigit(eq.at(i - 1)) || isalpha(eq.at(i - 1)))		//handles +- *- /- ^- --
+					sub.push_back(i);
 			break;
 		case '*':
 			mult.push_back(i);
@@ -157,8 +150,7 @@ double HandleVars::solveEquation(string eq)
 			break;
 		}
 	}
-	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size() + paren.size();		//This might need to change if parenthesis are handled differently
-	int startLocation = 0;
+	int runtime = add.size() + sub.size() + mult.size() + div.size() + pow.size();
 	vector<int> searchOp;
 	if (runtime > 0)		//for loop runs when runtime == 0 otherwise
 	{

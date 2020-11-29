@@ -1,3 +1,15 @@
-#include "../header/handleVars.hpp"
+#pragma once
+#include "handleVars.hpp"
+#include <iostream>
+class OneVar : public HandleVars
+{
+private:
+	string enterVariable(string var);
+public:
+	//Constructors
+	OneVar() : OneVar("") {}
+	OneVar(string inputEq) : HandleVars(inputEq) {}
 
-//Todo
+	//Accessors
+	virtual double getPoint(string somePoint) { return this->solveEquation(this->enterVariable(somePoint)); }
+};
