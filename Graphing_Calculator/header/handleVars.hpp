@@ -9,7 +9,7 @@
 using std::vector;
 using std::string;
 
-class HandleVars		//Abstract class
+class HandleVars
 {
 protected:
 	string eq;

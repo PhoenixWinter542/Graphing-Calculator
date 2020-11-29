@@ -35,14 +35,12 @@ vector<int> solveOp(string &inputEq, int start)
 				}
 				if (run)
 				{
-					std::cout << "lTop:\t" << inputEq.at((start - 1) - i) << "\t" << inputEq.substr(start - i, i) << "\n";
 					leftDone = true;
 					left = stod(inputEq.substr(lPos, i + 1));
 				}
 			}
 			else
 			{
-				std::cout << "lEnd:\tedge\t" << inputEq.substr(0, start) << "\n";
 				leftDone = true;
 				left = stod(inputEq.substr(0, start));
 				lPos = 0;
@@ -64,7 +62,6 @@ vector<int> solveOp(string &inputEq, int start)
 				}
 				if (run)
 				{
-					std::cout << "rTop:\t" << inputEq.at(start + 1 + i) << "\t" << inputEq.substr(start + 1, i) << "\n";
 					rightDone = true;
 					right = stod(inputEq.substr(start + 1, i));
 					rPos = start + i;
@@ -72,7 +69,6 @@ vector<int> solveOp(string &inputEq, int start)
 			}
 			else
 			{
-				std::cout << "rEnd:\tedge\t" << inputEq.substr(start + 1, i) << "\n";
 				rightDone = true;
 				right = stod(inputEq.substr(start + 1, i));
 				rPos = inputEq.size() - 1;
@@ -99,7 +95,6 @@ vector<int> solveOp(string &inputEq, int start)
 			case '^':
 				result = pow(left, right);
 			}
-			std::cout << left << "\t" << result << "\t" << right << "\n" << inputEq.substr(lPos, 1 + rPos - lPos) << "\n";
 			int originalSize = inputEq.size();
 
 			//remove any trailing zeros and the decimal point if whole number
@@ -116,7 +111,6 @@ vector<int> solveOp(string &inputEq, int start)
 			vector<int> toReturn;
 			toReturn.push_back(inputEq.size() - originalSize);
 			toReturn.push_back(rPos);
-			std::cout << inputEq << "\t\t" << resString << "\n\n";
 			return toReturn;
 		}
 	}
