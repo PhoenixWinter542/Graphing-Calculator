@@ -51,10 +51,12 @@ else()
     header/handleNoVars.hpp
     header/handleOneVar.hpp
     header/handleVars.hpp
+    header/removeParenthesis.hpp
     src/Interpreter.cpp
-    src/handleNoVars.cpp
+#    src/handleNoVars.cpp
     src/handleOneVar.cpp
     src/handleVars.cpp
+    src/removeParenthesis.cpp
     ${TS_FILES}
   )
 endif()
