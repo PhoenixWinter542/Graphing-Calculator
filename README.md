@@ -31,11 +31,10 @@ Design Patterns
   - There will be an interpreter algorithm for each type of equation we support.
   - This makes interpreting the user input much simpler than having a large function inside the input class.
 
-* Iterator:
-  - Iterator will be used to more easily traverse the list of equations and the objects attributed to each one.
-  - Simplifies iterating through the elements required for each line.
-  - A standard iterator means that we can safely assume iteration will produce the same result regardless of where it was called.
-  - If we need to change the iteration, it is easier and safer if the process is centralized and isolated.
+* Factory:
+  - We are using factory pattern because we need to avoid  baving to interpret the equation outside the interpreter
+  - This factory creates the strategy needed to solve each type of equation
+  - This helps us adheir to the single responsibility principle
 
 * Mediator:
   - We will be implementing the mediator pattern in our user interface and the way it interacts with the backend.
@@ -47,8 +46,8 @@ Design Patterns
 ## Class Diagram
  Strategy
  ![Alt text](Strategy_Interpret_User_Input.jpeg?raw=true "Strategy")
- Iterator
- ![Alt text](Iterator_Draw_Graph.jpeg?raw=true "Iterator")
+ Factory
+ ![Alt text](Factory_Interpreter.jpeg?raw=true "Factory")
  Mediator
  ![Alt text](Mediator_GUI.jpeg?raw=true "Mediator")
 
