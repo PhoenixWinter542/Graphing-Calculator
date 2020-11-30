@@ -17,6 +17,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_DrawButton_clicked()
 {
     ui->EquationList->addItem(ui->EnterEquation->text());
+    ui->EquationList->setCurrentIndex(ui->EquationList->count() - 1);
 }
 
 void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
@@ -26,10 +27,13 @@ void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
     HandleVars *coords = III.getParsedEquation();
     std::vector<double> x, y;
 
-    double input = 0;
+    // since (0,0) is at the top left corner, the following trick while making
+    // the vector of points will move (0,0) to (235, 150)
+    // this trick will also flip the y axis so that the slop is correct
+    double input = -250;
     while (input < 500) {
-        x.push_back(input);
-        y.push_back(coords->getPoint(std::to_string(input)));
+        x.push_back((input + 235));
+        y.push_back((150 - coords->getPoint(std::to_string(input))));
         input += .1;
     }
     ui->graph->drawGraph(x, y);
