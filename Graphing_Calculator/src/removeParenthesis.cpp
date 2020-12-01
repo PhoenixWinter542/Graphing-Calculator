@@ -1,8 +1,5 @@
 #include "../header/removeParenthesis.hpp"
 
-#include <iostream>
-using std::cout;
-
 string removeSpaces(string eq);
 string findParenthesis(string eq);
 vector<vector<int>> adjustLocation(vector<vector<int>> parenLocations, int change, int i);
@@ -29,7 +26,6 @@ string removeSpaces(string eq)
 	*/
 string findParenthesis(string eq)
 {
-	cout << "\n\t\t\t\tTop\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 	vector<vector<int>> parenLocations;
 	int openParen = 0;		//Used to track how many open parenthesis have been found	|	parenFound(+1 if open, -1 if closed)
 	vector<int> paren;			//Tracks location of both parenthesis 0='(' 1=')'
@@ -43,11 +39,9 @@ string findParenthesis(string eq)
 			{
 				paren.push_back(i);
 				parenLocations.push_back(paren);
-				cout << "\t\t\t\tMid\t" << eq.substr(paren[0], 1 + paren[1] - paren[0]) << "\n"; //<<<<<<<<----------------------------------------------------------
 				paren.clear();
 			}
 	}
-	cout << "\t\t\t\tEnd\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 	if (parenLocations.empty())
 		return eq;
 	return handleParenthesis(eq, parenLocations);		//There were parenthesis inside the parenthesis
@@ -85,7 +79,6 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 				eq.replace(parenLocations[i][0], 1 + parenLocations[i + 1][1] - parenLocations[i][0], paren1);
 				parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
 				parenLocations.erase(parenLocations.begin() + i);
-				cout << "handleParenthesis:\t" << eq << "\n\n";	//<<<<<<<<----------------------------------------------------------
 			}
 		}
 	}
@@ -137,7 +130,6 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 							eq.replace(parenLocations[i][1] + 2, 1 + parenLocations[i + 1][1], paren1);
 							parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
 							originalSize = parenLocations.size();
-							cout << "handle-Mult:\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 						}
 						if (eq[parenLocations[i][1] + 2] == '+')
 							run = true;
@@ -155,7 +147,6 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 					parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
 					parenLocations.erase(parenLocations.begin());
 					parenLocations.erase(parenLocations.begin());
-					cout << "handleMult:\t" << eq << "\n";		//<<<<<<<<----------------------------------------------------------
 				}
 			}
 		}
@@ -175,10 +166,8 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 			eq.replace(parenLocations[i][0], 1 + parenLocations[i][1] - parenLocations[i][0], distributeNeg(findParenthesis(paren1)));
 			parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
 			parenLocations.erase(parenLocations.begin() + i--);
-			cout << "handleNeg:\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 		}
 	}
-	cout << "finishedParen:\t" << eq << "\n\n";		//<<<<<<<<----------------------------------------------------------
 	return eq;
 }
 
@@ -224,7 +213,6 @@ string distributeMult(string parenLeft, string parenRight)
 		for (int j = 0; j < parenValsRight.size(); j++)
 		{
 			result += parenValsLeft[i] + "*" + parenValsRight[j] + '+';
-			cout << "distributeMult:\t" << result << "\n";		//<<<<<<<<----------------------------------------------------------
 
 		}
 	}
@@ -263,11 +251,9 @@ vector<string> getVals(string eq)
 				{
 					digitStarted = false;
 					parenVals.push_back(eq.substr(firstPos, i - firstPos));
-					cout << "getVals\tTop:\t" << eq.substr(firstPos, i - firstPos) << "\n";
 				}
 	}
 	parenVals.push_back(eq.substr(firstPos, eq.size() - firstPos));
-	cout << "getVals\tEnd:\t" << eq.substr(firstPos, eq.size() - firstPos) << "\n";
 	return parenVals;
 }
 
