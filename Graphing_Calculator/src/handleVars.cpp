@@ -93,7 +93,15 @@ vector<int> HandleVars::solveOp(string &inputEq, int start)
 				result = left / right;
 				break;
 			case '^':
+				bool negative = false;
+				if (right < 0)
+				{
+					negative = true;
+					right *= -1;
+				}
 				result = pow(left, right);
+				if (negative)
+					result = 1 / result;
 			}
 			int originalSize = inputEq.size();
 
