@@ -27,6 +27,8 @@ private slots:
 
     void on_DeleteLine_clicked();
 
+    void on_EnterEquation_returnPressed();
+
 private:
     Ui::MainWindow *ui;
 };

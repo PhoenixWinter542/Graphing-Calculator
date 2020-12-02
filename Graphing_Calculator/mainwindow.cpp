@@ -46,3 +46,8 @@ void MainWindow::on_DeleteLine_clicked()
 {
     ui->EquationList->removeItem(ui->EquationList->currentIndex());
 }
+
+void MainWindow::on_EnterEquation_returnPressed()
+{
+    on_DrawButton_clicked();
+}
