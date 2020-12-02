@@ -11,6 +11,9 @@ using std::string;
 
 class HandleVars
 {
+private:
+	vector<int> solveOp(string &inputEq, int start);
+
 protected:
 	string eq;
 

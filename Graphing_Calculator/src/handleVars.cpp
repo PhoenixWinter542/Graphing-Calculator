@@ -1,5 +1,5 @@
 #include "../header/handleVars.hpp"
-vector<int> solveOp(string &inputEq, int start)
+vector<int> HandleVars::solveOp(string &inputEq, int start)
 {
 	bool leftDone = false, rightDone = false;
 	double left, right;
@@ -103,7 +103,7 @@ vector<int> solveOp(string &inputEq, int start)
 			if (resString.at(resString.size() - 1) == '.')
 				resString.erase(resString.size() - 1, 1);
 
-				inputEq.replace(lPos, 1 + rPos - lPos, resString);	//On either edge
+				inputEq.replace(lPos, 1 + rPos - lPos, resString);	
 
 			vector<int> toReturn;
 			toReturn.push_back(inputEq.size() - originalSize);
