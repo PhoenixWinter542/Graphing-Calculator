@@ -15,7 +15,6 @@ GraphArea::~GraphArea()
 
 void GraphArea::drawGraph(std::vector<double>& x, std::vector<double>& y)
 {
-    std::cout << "click recived\n";
     this->x = x;
     this->y = y;
     update();
