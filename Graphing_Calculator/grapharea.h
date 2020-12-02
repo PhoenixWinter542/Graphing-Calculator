@@ -24,11 +24,11 @@ public:
     void drawGraph(std::vector<double>& x, std::vector<double>& y);
 
     void paintEvent(QPaintEvent *);
+    void reset();
 
 private:
     std::vector<double> x;
     std::vector<double> y;
-    bool graphExist;
     Ui::GraphArea *ui;
 };
 

@@ -25,6 +25,10 @@ private slots:
 
     void on_EquationList_currentIndexChanged(const QString &arg1);
 
+    void on_DeleteLine_clicked();
+
+    void on_EnterEquation_returnPressed();
+
 private:
     Ui::MainWindow *ui;
 };

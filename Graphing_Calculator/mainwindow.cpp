@@ -22,19 +22,32 @@ void MainWindow::on_DrawButton_clicked()
 
 void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
 {
-    // generate points and graph
-    Interpreter III(arg1.toStdString());
-    HandleVars *coords = III.getParsedEquation();
-    std::vector<double> x, y;
+    if (ui->EquationList->count() > 0) {
+        // generate points and graph
+        Interpreter III(arg1.toStdString());
+        HandleVars *coords = III.getParsedEquation();
+        std::vector<double> x, y;
 
-    // since (0,0) is at the top left corner, the following trick while making
-    // the vector of points will move (0,0) to (235, 150)
-    // this trick will also flip the y axis so that the slop is correct
-    double input = -250;
-    while (input < 500) {
-        x.push_back((input + 235));
-        y.push_back((150 - coords->getPoint(std::to_string(input))));
-        input += .1;
-    }
-    ui->graph->drawGraph(x, y);
+        // since (0,0) is at the top left corner, the following trick while making
+        // the vector of points will move (0,0) to (235, 150)
+        // this trick will also flip the y axis so that the slop is correct
+        double input = -250;
+        while (input < 500) {
+            x.push_back((input + 235));
+            y.push_back((150 - coords->getPoint(std::to_string(input))));
+            input += .1;
+        }
+        ui->graph->drawGraph(x, y);
+    } else
+        ui->graph->reset();
+}
+
+void MainWindow::on_DeleteLine_clicked()
+{
+    ui->EquationList->removeItem(ui->EquationList->currentIndex());
+}
+
+void MainWindow::on_EnterEquation_returnPressed()
+{
+    on_DrawButton_clicked();
 }
