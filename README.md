@@ -68,7 +68,16 @@ Design Patterns
  ## Screenshots
  > Screenshots of the input/output after running your application
  ## Installation/Usage
- > Instructions on installing and running your application
+ Linux:
+* Dowload the Linux executable
+* Run from commandline using "./Graphing_Calculator
+
+Windows:
+* Dowload the Windows execuatable
+* Double click the Graphing_Calculator.exe
+
  ## Testing
  > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
+ 
+Testing was done using unit tests via Google Test framwork. All individual components were tested in this way. Only gui elements were not directly tested.
  
