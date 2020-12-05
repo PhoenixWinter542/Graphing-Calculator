@@ -1,5 +1,6 @@
-#include "../header/handleVars.hpp"
-vector<int> HandleVars::solveOp(string &inputEq, int start)
+#include "../header/equation.hpp"
+
+vector<int> solveOp(string& inputEq, int start)
 {
 	bool leftDone = false, rightDone = false;
 	double left, right;
@@ -16,7 +17,7 @@ vector<int> HandleVars::solveOp(string &inputEq, int start)
 				{
 					run = true;
 					lPos = start - i;
-				}	
+				}
 				else if (i != 0 && inputEq.at(start - i) == '-')
 				{
 					run = true;
@@ -111,7 +112,11 @@ vector<int> HandleVars::solveOp(string &inputEq, int start)
 			if (resString.at(resString.size() - 1) == '.')
 				resString.erase(resString.size() - 1, 1);
 
-				inputEq.replace(lPos, 1 + rPos - lPos, resString);	
+			/* bug where a-b*-b forgets a-b and replaces it with ab */
+			if (lPos != 0 && inputEq[lPos] == '-' && resString[0] != '-')
+				resString = "+" + resString;
+
+			inputEq.replace(lPos, 1 + rPos - lPos, resString);
 
 			vector<int> toReturn;
 			toReturn.push_back(inputEq.size() - originalSize);
@@ -132,12 +137,12 @@ void adjust(vector<int>& ops, int change, int start)
 	}
 }
 
-double HandleVars::solveEquation(string eq)
+string equation::simplify(string eq)
 {
 	vector<int> add, sub, mult, div, pow, paren;
 	for (int i = 0; i < eq.size(); i++)		//Gets the amount of each equation type
 	{
-		switch (eq.at(i))
+		switch (eq[i])
 		{
 		case '+':
 			add.push_back(i);
@@ -200,5 +205,5 @@ double HandleVars::solveEquation(string eq)
 			}
 		}
 	}
-	return stod(eq);
+	return eq;
 }
