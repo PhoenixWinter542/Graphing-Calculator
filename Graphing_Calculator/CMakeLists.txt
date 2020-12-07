@@ -47,15 +47,17 @@ else()
     grapharea.cpp
     grapharea.h
     grapharea.ui
+    header/equation.hpp
     header/Interpreter.hpp
     header/handleNoVars.hpp
     header/handleOneVar.hpp
     header/handleVars.hpp
     header/removeParenthesis.hpp
+    src/equation.cpp
     src/Interpreter.cpp
 #    src/handleNoVars.cpp
     src/handleOneVar.cpp
-    src/handleVars.cpp
+#    src/handleVars.cpp
     src/removeParenthesis.cpp
     ${TS_FILES}
   )
