@@ -25,9 +25,9 @@ private slots:
 
     void on_EquationList_currentIndexChanged(const QString &arg1);
 
-    void on_DeleteLine_clicked();
+    void on_DeleteLine_clicked();   // deletes a lines
 
-    void on_EnterEquation_returnPressed();
+    void on_EnterEquation_returnPressed();  // adds a new line
 
 private:
     Ui::MainWindow *ui;

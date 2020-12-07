@@ -16,6 +16,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_DrawButton_clicked()
 {
+    // adds a new line and stores it
     ui->EquationList->addItem(ui->EnterEquation->text());
     ui->EquationList->setCurrentIndex(ui->EquationList->count() - 1);
 }
@@ -37,9 +38,9 @@ void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
             y.push_back((150 - coords->getPoint(std::to_string(input))));
             input += .1;
         }
-        ui->graph->drawGraph(x, y);
+        ui->graph->drawGraph(x, y);     // adds new line to deque in graph area
     } else
-        ui->graph->reset();
+        ui->graph->reset();     // if there are no stored equations, clear the graph
 }
 
 void MainWindow::on_DeleteLine_clicked()
