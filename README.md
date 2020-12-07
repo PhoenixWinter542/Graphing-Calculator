@@ -58,7 +58,7 @@ Design Patterns
  ## Installation/Usage
  Linux:
 * Dowload the Linux executable
-* Run from commandline using "./Graphing_Calculator
+* Run from commandline using "./Graphing_Calculator"
 
 Windows:
 * Dowload the Windows execuatable
