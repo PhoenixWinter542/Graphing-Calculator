@@ -1,3 +1,11 @@
+#ifndef __INTERPRETER_TEST_HPP__
+#define __INTERPRETER_TEST_HPP__
+
+#include "gtest/gtest.h"
+#include "interpreter.hpp"
+#include "interpreter.cpp"
+#include "handleOneVar.cpp"
+
 TEST(removeSpaces, BasicEQ) {
 	string eq = "y = 2x"
 	EXPECT_EQ("y=2x",removeSpaces(eq));
