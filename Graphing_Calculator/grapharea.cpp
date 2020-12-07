@@ -29,6 +29,7 @@ void GraphArea::paintEvent(QPaintEvent *) {
     QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     brush.setPen(pen);
 
+    // iterates through the deque of lines and graphs them
     if (x.size() > 0) {
         for (int j = 0; j < x.size(); ++j)
             for (unsigned long i = 0; i < x.at(j).size() - 1; ++i) {

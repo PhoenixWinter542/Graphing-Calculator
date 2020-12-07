@@ -24,8 +24,8 @@ public:
 
     void drawGraph(std::vector<double>& x, std::vector<double>& y);
 
-    void paintEvent(QPaintEvent *);
-    void reset();
+    void paintEvent(QPaintEvent *); // graphs the lines
+    void reset();   // clears all lines from the graph
 
 private:
     std::deque<std::vector<double>> x;
