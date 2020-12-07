@@ -8,6 +8,7 @@
 #include <QPen>
 #include <QPaintDevice>
 #include <vector>
+#include <deque>
 #include <iostream>
 namespace Ui {
 class GraphArea;
@@ -27,8 +28,8 @@ public:
     void reset();
 
 private:
-    std::vector<double> x;
-    std::vector<double> y;
+    std::deque<std::vector<double>> x;
+    std::deque<std::vector<double>> y;
     Ui::GraphArea *ui;
 };
 
