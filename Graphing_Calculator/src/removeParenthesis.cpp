@@ -4,10 +4,14 @@ string removeSpaces(string eq);
 string findParenthesis(string eq);
 vector<vector<int>> adjustLocation(vector<vector<int>> parenLocations, int change, int i);
 string handleParenthesis(string eq, vector<vector<int>> parenLocations);
+string handleExponent(string base, string exponent);
+string handleNeg(string eq, vector<vector<int>>& parenLocations, int location);
 string distributeNeg(string eq);
 string distributeMult(string parenLeft, string parenRight);
+string distributePowVar(string parenLeft, string parenRight);
 string distributePow(string parenLeft, string parenRight);
 vector<string> getVals(string eq);
+string simplify(string eq);
 
 
 string removeSpaces(string eq)
@@ -43,7 +47,7 @@ string findParenthesis(string eq)
 			}
 	}
 	if (parenLocations.empty())
-		return eq;
+		return simplify(eq);
 	return handleParenthesis(eq, parenLocations);		//There were parenthesis inside the parenthesis
 }
 
@@ -61,30 +65,104 @@ vector<vector<int>> adjustLocation(vector<vector<int>> parenLocations, int chang
 
 string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 {
-	if (parenLocations.size() > 1)
+	while (!parenLocations.empty())
 	{
 		int powPos = -1;
-		for (int i = 0; i < parenLocations.size() - 1; i++)		//Handle possible paren with exponent------------------DOESN'T WORK WITH ()^-()-----------------
+		int baseLocation = -1, start = -1, end = -1;
+		bool baseParen = false, exponentParen = false;
+		string base = "", exponent = "";
+		for (int i = 0; i < parenLocations.size(); i++)		//Handle possible paren with exponent		Might take ()^x+4-7^() as ()^()
 		{
-			if (eq[parenLocations[i][1] + 1] == '^')		//a paren is in form ()^x
+			if (eq.size() > i + 1)
 			{
-				string exponent = "";
-				int originalSize = parenLocations.size();
-				if (parenLocations[i][1] == parenLocations[i + 1][0] - 2)		//eq has paren^paren
-					exponent = findParenthesis(eq.substr(parenLocations[i + 1][0] + 1, parenLocations[i + 1][1]));
-				else if (parenLocations[i][1] + 2 < eq.size())
-					exponent = eq[parenLocations[i][1] + 2];
-				string paren1 = eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - (parenLocations[i][0] + 1));
-				paren1 = distributePow(findParenthesis(paren1), exponent);
-				eq.replace(parenLocations[i][0], 1 + parenLocations[i + 1][1] - parenLocations[i][0], paren1);
-				parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
-				parenLocations.erase(parenLocations.begin() + i);
+				if (eq[parenLocations[i][1] + 1] == '^' && !baseParen)		//eq has paren^
+				{
+					base = eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - (parenLocations[i][0] + 1));
+					base = findParenthesis(base);
+					baseLocation = i;
+					start = parenLocations[i][0];
+					if (end == -1)
+						end = parenLocations[i][1];
+					baseParen = true;
+				}
+			}
+			if (parenLocations[i][0] - 2 >= 0)		//distributes any leading negative in exponent
+				if ((eq[parenLocations[i][0] - 1] == '-' && eq[parenLocations[i][0] - 2] == '^'))
+					eq = handleNeg(eq, parenLocations, i);
+			if (parenLocations[i][0] - 1 >= 0)
+			{
+				if (!exponentParen && eq[parenLocations[i][0] - 1] == '^')	//eq has ^paren
+				{
+					exponent = eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - (parenLocations[i][0] + 1));
+					exponent = findParenthesis(exponent);
+					end = parenLocations[i][1];
+					if (baseLocation == -1)
+					{
+						baseLocation = i;
+						start = parenLocations[i][0];
+					}
+					exponentParen = true;
+				}
 			}
 		}
-	}
-	if (parenLocations.size() > 1)		//handle possible paren multiplication
-	{
-		for (int i = 0; i + 1 < parenLocations.size(); i++)
+		if (baseParen && !exponentParen)	//Find exponent, Assumes 2X == ^(2X), and 2*X == (^2)*X
+		{
+			int valStart = ++end;
+			while (eq[++end] == '.' || eq[end] == '-' || isalpha(eq[end]) || isdigit(eq[end]))		//Get the entire exponent value
+			{
+				if (eq[end] == '-' && end != 1 + valStart)
+				{
+					end--;
+					break;
+				}
+				if (eq.size() <= end)
+				{
+					end--;
+					break;
+				}
+			}
+			if (--end - valStart <= 0)
+				end = valStart + 1;
+			exponent = eq.substr(1 + valStart, end - valStart);
+		}
+		else if (exponentParen && !baseParen)	//Find base
+		{
+			if (!isalpha(eq[start - 2]) && !isdigit(eq[start - 2]))	//in form .^() or *^() or +^() etc.		removes char before ^
+			{
+				eq.erase(start - 2);
+				parenLocations[baseLocation][0]--;
+				parenLocations = adjustLocation(parenLocations, -1, baseLocation);
+			}
+			if (isalpha(eq[start - 2]))		//Only accepts single letter variables
+			{
+				start -= 2;
+				base = eq[start, 1];
+			}
+			else	//is a digit
+			{
+				start -= 1;
+				while (isdigit(eq[--start]) || eq[start] == '.')
+				{
+					if (start < 0)
+						break;
+				}
+				start++;
+				base = eq.substr(start, (parenLocations[baseLocation][0] - 1) - start);
+			}
+		}
+		if (baseParen || exponentParen)
+		{
+			int originalSize = eq.size();
+			string result = handleExponent(base, exponent);
+			eq.replace(start, 1 + end - start, result);
+			parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, baseLocation);
+			parenLocations.erase(parenLocations.begin() + baseLocation);
+			if (baseParen && exponentParen)
+				parenLocations.erase(parenLocations.begin() + baseLocation);
+		}
+
+
+		for (int i = 0; i + 1 < parenLocations.size(); i++)		//handle possible paren multiplication
 		{
 			if (parenLocations[i][0] - 1 >= 0 && (isdigit(eq[parenLocations[i][0] - 1]) || isalpha(eq[parenLocations[i][0] - 1])))
 			{
@@ -150,25 +228,55 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 				}
 			}
 		}
-	}
-	for (int i = 0; i < parenLocations.size(); i++)		//Handles distributing negatives
-	{
-		if (parenLocations[i][0] > 0 && eq[parenLocations[i][0] - 1] == '-')
+		for (int i = 0; i < parenLocations.size(); i++)		//Handles distributing negatives
 		{
-			eq.erase(parenLocations[i][0] - 1, 1);
-
-			//Adjusts for deletion of leading '-'
-			parenLocations[i][0]--;
-			parenLocations = adjustLocation(parenLocations, -1, i);
-
-			int  originalSize = eq.size();
-			string paren1 = eq.substr(1 + parenLocations[i][0], parenLocations[i][1] - (parenLocations[i][0] + 1));
-			eq.replace(parenLocations[i][0], 1 + parenLocations[i][1] - parenLocations[i][0], distributeNeg(findParenthesis(paren1)));
-			parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
-			parenLocations.erase(parenLocations.begin() + i--);
+			if (parenLocations[i][0] > 0 && eq[parenLocations[i][0] - 1] == '-')
+			{
+				eq = handleNeg(eq, parenLocations, i--);
+			}
 		}
 	}
 	return eq;
+}
+
+/*
+* control function for distributing negatives
+* - location == the position of the relevant parenthesis in parenLocations
+*/
+string handleNeg(string eq, vector<vector<int>>& parenLocations, int location)
+{
+	eq.erase(parenLocations[location][0] - 1, 1);
+
+	//Adjusts for deletion of leading '-'
+	parenLocations[location][0]--;
+	parenLocations = adjustLocation(parenLocations, -1, location);
+
+	int  originalSize = eq.size();
+	string paren1 = eq.substr(1 + parenLocations[location][0], parenLocations[location][1] - (parenLocations[location][0] + 1));
+	eq.replace(parenLocations[location][0], 1 + parenLocations[location][1] - parenLocations[location][0], distributeNeg(findParenthesis(paren1)));
+	parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, location);
+	parenLocations.erase(parenLocations.begin() + location);
+	return eq;
+}
+
+string handleExponent(string base, string exponent)
+{
+	bool hasVariable = false;
+	for (int i = 0; i < exponent.size(); i++)
+	{
+		if (isalpha(exponent[i]))
+		{
+			hasVariable = true;
+			base = '(' + base + ')';
+			break;
+		}
+	}
+	string result;
+	if (hasVariable)
+		result = distributePowVar(base, exponent);
+	else
+		result = distributePow(base, exponent);
+	return result;
 }
 
 string distributeNeg(string eq)
@@ -213,7 +321,6 @@ string distributeMult(string parenLeft, string parenRight)
 		for (int j = 0; j < parenValsRight.size(); j++)
 		{
 			result += parenValsLeft[i] + "*" + parenValsRight[j] + '+';
-
 		}
 	}
 	if (result[result.size() - 1] == '+')
@@ -221,12 +328,32 @@ string distributeMult(string parenLeft, string parenRight)
 	return result;
 }
 
-string distributePow(string parenLeft, string parenRight)
+string distributePowVar(string parenLeft, string parenRight)
 {
-	return parenLeft + parenRight;		//Placeholder
+	vector<string> parenValsRight = getVals(parenRight);
+	string result = "";
+
+	for (int i = 0; i < parenValsRight.size(); i++)
+	{
+		result += parenLeft + '^' + parenValsRight[i] + '*';
+	}
+
+	if (result[result.size() - 1] == '*')
+		result.pop_back();
+	return result;
 }
 
-//Used by distributeMult
+string distributePow(string parenLeft, string parenRight)
+{
+	parenLeft = equation::simplify(parenLeft);
+	parenRight = equation::simplify(parenRight);
+	return parenLeft + '^' + parenRight;
+}
+
+/*
+* used by distributeMult and distributePow to seperate the operations of parenthesis
+* returns a vector of the operations contained in the passed string
+*/
 vector<string> getVals(string eq)
 {
 	vector<string> parenVals;
@@ -255,6 +382,46 @@ vector<string> getVals(string eq)
 	}
 	parenVals.push_back(eq.substr(firstPos, eq.size() - firstPos));
 	return parenVals;
+}
+
+string simplify(string eq)
+{
+	string result;
+	if (!eq.empty())
+	{
+		vector<string> eqVals = getVals(eq);
+		string temp;
+		while (!eqVals.empty())
+		{
+			bool hasVariable = false;
+			for (int i = 0; i < eqVals[0].size(); i++)
+			{
+				if (isalpha(eqVals[0][i]))
+				{
+					hasVariable = true;
+					break;
+				}
+			}
+			if (hasVariable)
+			{
+				if (!temp.empty() && eqVals[0][0] != '-')
+					temp += '+';
+				temp += eqVals[0];
+			}
+			else
+			{
+				if (!result.empty() && eqVals[0][0] != '-')
+					result += '+';
+				result += eqVals[0];
+				result = equation::simplify(result);
+			}
+			eqVals.erase(eqVals.begin());
+		}
+		if (!temp.empty() && temp[0] != '-')
+			result += '+';
+		result += temp;
+	}
+	return result;
 }
 
 namespace removeParenthesis

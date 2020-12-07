@@ -1,23 +1,20 @@
 #pragma once
 
-#include <iostream>
-
 #include <vector>
 #include <string>
 #include <cmath>
+#include "removeParenthesis.hpp"
+#include "equation.hpp"
 
 using std::vector;
 using std::string;
 
 class HandleVars
 {
-private:
-	vector<int> solveOp(string &inputEq, int start);
-
 protected:
 	string eq;
 
-	double solveEquation(string eq);
+	double solveEquation(string eq) { return std::stod(equation::simplify(removeParenthesis::parse(eq))); };
 
 	HandleVars(string eq) { this->eq = eq; };
 
