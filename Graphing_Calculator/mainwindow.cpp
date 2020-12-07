@@ -16,9 +16,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_DrawButton_clicked()
 {
-    // adds a new line and stores it
-    ui->EquationList->addItem(ui->EnterEquation->text());
-    ui->EquationList->setCurrentIndex(ui->EquationList->count() - 1);
+    Interpreter *i = new Interpreter(ui->EnterEquation->text().toStdString());
+    if (i->getParsedEquation() != nullptr) {
+        // adds a new line and stores it
+        ui->EquationList->addItem(ui->EnterEquation->text());
+        ui->EquationList->setCurrentIndex(ui->EquationList->count() - 1);
+    }
+    delete i;
 }
 
 void MainWindow::on_EquationList_currentIndexChanged(const QString &arg1)
