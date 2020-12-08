@@ -6,7 +6,10 @@ SET(CMAKE_CXX_STANDARD 11)
 
 
 ADD_EXECUTABLE(test
-	unit_test.cpp
+    Graphing_Calculator/src/equation.cpp
+	Graphing_Calculator/src/Interpreter.cpp
+	Testing/unit_test.cpp
+	
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
