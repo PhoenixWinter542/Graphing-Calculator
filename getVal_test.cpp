@@ -39,7 +39,7 @@ TEST(getVal, ComplexDiv) {
 }
 
 TEST(getVal, Mult) {
-	EXPECT_EQ("x*5", getVals("x*5));
+	EXPECT_EQ("x*5", getVals("x*5"));
 }
 
 TEST(getVal,ComplexMult) {
@@ -47,11 +47,11 @@ TEST(getVal,ComplexMult) {
 }
 
 TEST(getVal,ComplexAddMultPowSub) {
-	EXPECT_EQ("x^2+2*x+1-x", getVals("x^2+3*x+1-5-x));
+	EXPECT_EQ("x^2+2*x+1-x", getVals("x^2+3*x+1-5-x"));
 }
 
 TEST(getVal, Decimals) {
-	EXPECT_EQ(".2*x", getVals(".2 * x"));
+	EXPECT_EQ(".2*x", getVals(".2*x"));
 }
 
 TEST(getVal, Decimals2) {
