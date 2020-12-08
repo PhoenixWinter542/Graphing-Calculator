@@ -1,5 +1,5 @@
-#ifndef __INTERPRETER_TEST_HPP__
-#define __INTERPRETER_TEST_HPP__
+#ifndef REMOVE_SPACES_TEST_CPP__
+#define REMOVE_SPACES_TEST_CPP__
 
 #include "gtest/gtest.h"
 #include "interpreter.hpp"
@@ -26,3 +26,5 @@ TEST(removeSpaces, ParaEQ) {
 	string eq = "y = 3(x + 6)";
 	EXPECT_EQ("y=3(x+6)",removeSpaces(eq));
 }
+
+#endif
