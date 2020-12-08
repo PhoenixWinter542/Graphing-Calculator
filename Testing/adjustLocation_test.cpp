@@ -37,14 +37,14 @@ TEST(adjustLocation, Basic) {
 	inner.push_back(3);
 	location.push_back(inner);
 	inner.pop_back(); inner.pop_back();
-	inner.push_back(4);
-	inner.push_back(6);
-	location.push_back(inner);
+	//inner.push_back(4);
+	//inner.push_back(6);
+	//location.push_back(inner);
 	location = adjustLocation(location,-1,0);
 	EXPECT_EQ(0,location[0][0]);
 	EXPECT_EQ(2,location[0][1]);
-	EXPECT_EQ(5,location[1][1]);
-	EXPECT_EQ(0,location[1][2]);
+	//EXPECT_EQ(5,location[1][1]);
+	//EXPECT_EQ(0,location[1][2]);
 }
 
 #endif /*__ADJUSTLOCATION_TEST_CPP__ */
