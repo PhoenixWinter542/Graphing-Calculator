@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-add_subdirectory(googletest)
-
 project(Graphing_Calculator LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -65,11 +63,6 @@ else()
   )
 endif()
 
-add_executable(test
-  ../unit_test.cpp
-)
-
-target_link_libraries(test gtest)
 target_link_libraries(Graphing_Calculator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
