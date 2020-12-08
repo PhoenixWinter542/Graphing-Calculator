@@ -1,5 +1,5 @@
-#ifndef __INTERPRETER_TEST_HPP__
-#define __INTERPRETER_TEST_HPP__
+#ifndef __HANDLEPARA_TEST_CPP__
+#define __HANDLEPARA_TEST_CPP__
 
 #include "gtest/gtest.h"
 #include "interpreter.hpp"
@@ -65,3 +65,5 @@ TEST(handlePara, Complex2) {
 	location.push_back(inner);
 	EXPECT_EQ("x*x*x+x*x*4+7*x*x+4*7*x", handleParanthesis(eq,location));
 }
+
+#endif

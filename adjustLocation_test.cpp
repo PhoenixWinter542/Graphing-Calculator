@@ -1,5 +1,5 @@
-#ifndef __INTERPRETER_TEST_HPP__
-#define __INTERPRETER_TEST_HPP__
+#ifndef __ADJUSTLOCATION_TEST_CPP__
+#define __ADJUSTLOCATION_TEST_CPP__
 
 #include "gtest/gtest.h"
 #include "interpreter.hpp"
@@ -42,3 +42,5 @@ TEST(adjustLocation, Basic) {
 	EXPECT_EQ(3,location.at[1][1]);
 	EXPECT_EQ(5,location.at[1][2]);
 }
+
+#endif
