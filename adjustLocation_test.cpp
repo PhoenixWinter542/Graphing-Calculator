@@ -42,3 +42,5 @@ TEST(adjustLocation, Basic) {
 	EXPECT_EQ(3,location.at[1][1]);
 	EXPECT_EQ(5,location.at[1][2]);
 }
+
+#endif
