@@ -1,5 +1,5 @@
-#ifndef __EDGE_CASES_HPP__
-#define __EDGE_CASES_HPP__
+#ifndef __EDGE_CASES_TEST_CPP__
+#define __EDGE_CASES_TEST_CPP__
 
 #include "gtest/gtest.h"
 #include "interpreter.hpp"
