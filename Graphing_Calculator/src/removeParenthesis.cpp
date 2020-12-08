@@ -458,37 +458,53 @@ string simplify(string eq)
 	string result;
 	if (!eq.empty())
 	{
-		vector<string> eqVals = getVals(eq);
-		string temp;
-		while (!eqVals.empty())
+		bool hasParens = false;
+		for (int i = 0; i < eq.size(); i++)
+			if (eq[i] == '(')
+			{
+				hasParens = true;
+				break;
+			}
+			else if (eq[i] == ')')		//No Opening parenthesis
+			{
+				eq.erase(eq.begin() + i--);
+			}
+		if (!hasParens)
 		{
-			bool hasVariable = false;
-			for (int i = 0; i < eqVals[0].size(); i++)
+			vector<string> eqVals = getVals(eq);
+			string temp;
+			while (!eqVals.empty())
 			{
-				if (isalpha(eqVals[0][i]))
+				bool hasVariable = false;
+				for (int i = 0; i < eqVals[0].size(); i++)
 				{
-					hasVariable = true;
-					break;
+					if (isalpha(eqVals[0][i]))
+					{
+						hasVariable = true;
+						break;
+					}
 				}
+				if (hasVariable)
+				{
+					if (!temp.empty() && eqVals[0][0] != '-')
+						temp += '+';
+					temp += eqVals[0];
+				}
+				else
+				{
+					if (!result.empty() && eqVals[0][0] != '-')
+						result += '+';
+					result += eqVals[0];
+					result = equation::simplify(result);
+				}
+				eqVals.erase(eqVals.begin());
 			}
-			if (hasVariable)
-			{
-				if (!temp.empty() && eqVals[0][0] != '-')
-					temp += '+';
-				temp += eqVals[0];
-			}
-			else
-			{
-				if (!result.empty() && eqVals[0][0] != '-')
-					result += '+';
-				result += eqVals[0];
-				result = equation::simplify(result);
-			}
-			eqVals.erase(eqVals.begin());
+			if (!temp.empty() && temp[0] != '-')
+				result += '+';
+			result += temp;
 		}
-		if (!temp.empty() && temp[0] != '-')
-			result += '+';
-		result += temp;
+		else
+			result = eq;
 	}
 	return result;
 }
