@@ -1,5 +1,5 @@
-#ifndef __INTERPRETER_TEST_HPP__
-#define __INTERPRETER_TEST_HPP__
+#ifndef __HANDLEPARA_TEST_CPP__
+#define __HANDLEPARA_TEST_CPP__
 
 #include "gtest/gtest.h"
 #include "interpreter.hpp"
