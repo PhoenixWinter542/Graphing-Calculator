@@ -7,19 +7,19 @@
 #include "../Graphing_Calculator/src/removeParenthesis.cpp"
 
 TEST(getVal, Add) {
-	EXPECT_EQ("x+5",getVals("x+5")[0]);
+	EXPECT_EQ("x",getVals("x+5")[0]);
 }
 
 TEST(getVal, ComplexAdd) {
-	EXPECT_EQ("x+x+x+5+7+9",getVals("x+x+x+5+7+9")[0]);
+	EXPECT_EQ("x",getVals("x+x+x+5+7+9")[0]);
 }
 
 TEST(getVal,Sub) {
-	EXPECT_EQ("x-5",getVals("x-5")[0]);
+	EXPECT_EQ("x",getVals("x-5")[0]);
 }
 
 TEST(getVal,ComplexSub) {
-	EXPECT_EQ("x-5-x-x-6", getVals("x-5-x-x-6")[0]);
+	EXPECT_EQ("x", getVals("x-5-x-x-6")[0]);
 }
 
 TEST(getVal,Pow) {
@@ -47,7 +47,7 @@ TEST(getVal,ComplexMult) {
 }
 
 TEST(getVal,ComplexAddMultPowSub) {
-	EXPECT_EQ("x^2+2*x+1-x", getVals("x^2+3*x+1-5-x")[0]);
+	EXPECT_EQ("x^2", getVals("x^2+3*x+1-5-x")[0]);
 }
 
 TEST(getVal, Decimals) {

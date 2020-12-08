@@ -518,5 +518,4 @@ string simplify(string eq)
 	}
 // }
 
-
 #endif
