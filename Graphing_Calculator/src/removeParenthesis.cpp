@@ -50,9 +50,12 @@ string findParenthesis(string eq)
 				paren.clear();
 			}
 	}
+	string result;
 	if (parenLocations.empty())
-		return simplify(eq);
-	return handleParenthesis(eq, parenLocations);		//There were parenthesis inside the parenthesis
+		result = simplify(eq);
+	else
+		result = simplify(handleParenthesis(eq, parenLocations));		//There were parenthesis inside the parenthesis
+	return result;
 }
 
 	//adjusts all parenLocations after parenLocations[i][0] by change
@@ -69,6 +72,7 @@ vector<vector<int>> adjustLocation(vector<vector<int>> parenLocations, int chang
 
 string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 {
+	bool noAction = true;
 	while (!parenLocations.empty())
 	{
 		int powPos = -1;
@@ -163,13 +167,35 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 			parenLocations.erase(parenLocations.begin() + baseLocation);
 			if (baseParen && exponentParen)
 				parenLocations.erase(parenLocations.begin() + baseLocation);
+			noAction = false;
 		}
 
+		//if (parenLocations[0][0] - 1 >= 0 && (isdigit(eq[parenLocations[0][0] - 1]) || isalpha(eq[parenLocations[0][0] - 1])))
+		//{
+		//	string left = eq.substr(0, parenLocations[0][0]);
+		//	left = getVals(left).back();
+		//	string right = eq.substr(parenLocations[0][0] + 1, parenLocations[0][1] - parenLocations[0][0] - 1);
+		//	right = findParenthesis(right);
+		//	eq.replace(parenLocations[0][0] - left.size(), 1 + parenLocations[0][1] - (parenLocations[0][0] - left.size()), distributeMult(left, right));
+		//	parenLocations.erase(parenLocations.begin());
+		//}
 
-		for (int i = 0; i + 1 < parenLocations.size(); i++)		//handle possible paren multiplication
+		for (int i = 0; i < parenLocations.size(); i++)		//handle possible paren multiplication
 		{
-			if (parenLocations[i][0] - 1 >= 0 && (isdigit(eq[parenLocations[i][0] - 1]) || isalpha(eq[parenLocations[i][0] - 1])))
+			if (parenLocations[i][0] - 1 >= 0 && (isdigit(eq[parenLocations[i][0] - 1]) || isalpha(eq[parenLocations[i][0] - 1])
+				|| eq[parenLocations[i][0] - 1] == '*'|| eq[parenLocations[i][0] - 1] == '/'))
 			{
+				if (eq[parenLocations[i][0] - 1] == '/')
+				{
+					eq[parenLocations[i][0] - 1] = '*';
+					int originalSize = eq.size();
+					string temp = distributePow(findParenthesis(eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - parenLocations[i][0] - 1)), "-1");
+					eq.replace(parenLocations[i][0], 1 + parenLocations[i][1] - parenLocations[i][0], temp);
+					parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
+					parenLocations.erase(parenLocations.begin() + i);
+					noAction = false;
+					break;
+				}
 				int originalSize = eq.size();
 				int valStart = parenLocations[i][0] - 1;
 				while (eq[valStart] == '.' || eq[valStart] == '*' || eq[valStart] == '-' || isalpha(eq[valStart]) || isdigit(eq[valStart]))		//Get the entire first value
@@ -180,12 +206,13 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 						break;
 				}
 				valStart++;
-				string val1 = eq.substr(valStart, parenLocations[i][0] - valStart);
+				string val1 = eq.substr(valStart, parenLocations[i][0] - valStart - 1);
 				string paren1 = eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - (parenLocations[i][0] + 1));
 				paren1 = findParenthesis(paren1);
 				eq.replace(valStart, parenLocations[i][1] - (valStart - 1), distributeMult(val1, paren1));
 				parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
 				parenLocations.erase(parenLocations.begin() + i--);
+				noAction = false;
 				int remainingParens = parenLocations.size();
 				if (remainingParens <= i)
 					break;
@@ -201,24 +228,25 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 				//there is at least one operation between the parenthesis
 				int originalSize = eq.size();
 				bool run = false;
-				if (parenLocations[i][1] != parenLocations[i + 1][0] - 1 && parenLocations[i][1] >= parenLocations[i + 1][0] - 3)
+				if (i + 1 < parenLocations.size())
 				{
-					if (eq[parenLocations[i][1] + 1] == '*')
+					if (parenLocations[i][1] != parenLocations[i + 1][0] - 1 && parenLocations[i][1] >= parenLocations[i + 1][0] - 3)
 					{
-						if (eq[parenLocations[i][1] + 2] == '-')
+						if (eq[parenLocations[i][1] + 1] == '*')
 						{
-							string paren1 = eq.substr(parenLocations[i + 1][0] + 1, parenLocations[i + 1][1]);
-							paren1 = "+" + distributeNeg(findParenthesis(paren1));
-							eq.replace(parenLocations[i][1] + 2, 1 + parenLocations[i + 1][1], paren1);
-							parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
-							originalSize = parenLocations.size();
+							if (eq[parenLocations[i][1] + 2] == '-' && parenLocations[i + 1][0] - 1 == parenLocations[i][1] + 2)	//handles ()*-()
+							{
+								string paren1 = eq.substr(parenLocations[i + 1][0] + 1, parenLocations[i + 1][1]);
+								paren1 = "+" + distributeNeg(findParenthesis(paren1));
+								eq.replace(parenLocations[i][1] + 2, 1 + parenLocations[i + 1][1], paren1);
+								parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
+								originalSize = parenLocations.size();
+							}
 						}
-						if (eq[parenLocations[i][1] + 2] == '+')
-							run = true;
 					}
+					else if (parenLocations[i][1] == parenLocations[i + 1][0] - 1)
+						run = true;
 				}
-				else if (parenLocations[i][1] == parenLocations[i + 1][0] - 1)
-					run = true;
 				if (run)
 				{
 					string paren1 = eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - 1 - parenLocations[i][0]);
@@ -229,15 +257,50 @@ string handleParenthesis(string eq, vector<vector<int>> parenLocations)
 					parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
 					parenLocations.erase(parenLocations.begin());
 					parenLocations.erase(parenLocations.begin());
+					noAction = false;
 				}
+				int stop;
+				if (i + 1 < parenLocations.size())
+					stop = parenLocations[i + 1][0];
+				else
+					stop = eq.size();
+				bool digitFound = false;
+				if (!parenLocations.empty())
+					for (int j = parenLocations[i][1] + 2; j < stop; j++)
+					{
+						if (isdigit(eq[j]) || isalpha(eq[j]))
+							digitFound = true;
+						if (digitFound && (eq[j] == '-' || eq[j] == '+' || eq[j] == '*' || eq[j] == '/') && eq[j - 1] != '^')
+						{
+							string left = eq.substr(parenLocations[i][0] + 1, parenLocations[i][1] - parenLocations[i][0] - 1);
+							left = findParenthesis(left);
+							string right = eq.substr(parenLocations[i][1] + 2, j - parenLocations[i][1] - 2);
+							int originalSize = eq.size();
+							eq.replace(parenLocations[i][0], j - parenLocations[i][0], distributeMult(left, right));
+							parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, i);
+							parenLocations.erase(parenLocations.begin() + i);
+							noAction = false;
+							break;
+						}
+					}
 			}
 		}
 		for (int i = 0; i < parenLocations.size(); i++)		//Handles distributing negatives
 		{
-			if (parenLocations[i][0] > 0 && eq[parenLocations[i][0] - 1] == '-')
+			if (parenLocations[i][0] > 0 && (eq[parenLocations[i][0] - 1] == '-'))
 			{
 				eq = handleNeg(eq, parenLocations, i--);
+				noAction = false;
 			}
+		}
+		if (noAction)
+		{
+			int originalSize = eq.size();
+			string temp = findParenthesis(eq.substr(parenLocations[0][0] + 1, parenLocations[0][1] - parenLocations[0][0] - 1));
+			eq.replace(parenLocations[0][0], 1 + parenLocations[0][1] - parenLocations[0][0], temp);
+			parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, 0);
+			parenLocations.erase(parenLocations.begin());
+			noAction = true;
 		}
 	}
 	return eq;
@@ -259,6 +322,8 @@ string handleNeg(string eq, vector<vector<int>>& parenLocations, int location)
 	string paren1 = eq.substr(1 + parenLocations[location][0], parenLocations[location][1] - (parenLocations[location][0] + 1));
 	eq.replace(parenLocations[location][0], 1 + parenLocations[location][1] - parenLocations[location][0], distributeNeg(findParenthesis(paren1)));
 	parenLocations = adjustLocation(parenLocations, eq.size() - originalSize, location);
+	//if (parenLocations[0][0] == 1)
+	//	eq.erase(eq.begin());
 	parenLocations.erase(parenLocations.begin() + location);
 	return eq;
 }
@@ -393,37 +458,53 @@ string simplify(string eq)
 	string result;
 	if (!eq.empty())
 	{
-		vector<string> eqVals = getVals(eq);
-		string temp;
-		while (!eqVals.empty())
+		bool hasParens = false;
+		for (int i = 0; i < eq.size(); i++)
+			if (eq[i] == '(')
+			{
+				hasParens = true;
+				break;
+			}
+			else if (eq[i] == ')')		//No Opening parenthesis
+			{
+				eq.erase(eq.begin() + i--);
+			}
+		if (!hasParens)
 		{
-			bool hasVariable = false;
-			for (int i = 0; i < eqVals[0].size(); i++)
+			vector<string> eqVals = getVals(eq);
+			string temp;
+			while (!eqVals.empty())
 			{
-				if (isalpha(eqVals[0][i]))
+				bool hasVariable = false;
+				for (int i = 0; i < eqVals[0].size(); i++)
 				{
-					hasVariable = true;
-					break;
+					if (isalpha(eqVals[0][i]))
+					{
+						hasVariable = true;
+						break;
+					}
 				}
+				if (hasVariable)
+				{
+					if (!temp.empty() && eqVals[0][0] != '-')
+						temp += '+';
+					temp += eqVals[0];
+				}
+				else
+				{
+					if (!result.empty() && eqVals[0][0] != '-')
+						result += '+';
+					result += eqVals[0];
+					result = equation::simplify(result);
+				}
+				eqVals.erase(eqVals.begin());
 			}
-			if (hasVariable)
-			{
-				if (!temp.empty() && eqVals[0][0] != '-')
-					temp += '+';
-				temp += eqVals[0];
-			}
-			else
-			{
-				if (!result.empty() && eqVals[0][0] != '-')
-					result += '+';
-				result += eqVals[0];
-				result = equation::simplify(result);
-			}
-			eqVals.erase(eqVals.begin());
+			if (!temp.empty() && temp[0] != '-')
+				result += '+';
+			result += temp;
 		}
-		if (!temp.empty() && temp[0] != '-')
-			result += '+';
-		result += temp;
+		else
+			result = eq;
 	}
 	return result;
 }
