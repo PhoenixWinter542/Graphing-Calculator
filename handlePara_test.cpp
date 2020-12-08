@@ -65,3 +65,5 @@ TEST(handlePara, Complex2) {
 	location.push_back(inner);
 	EXPECT_EQ("x*x*x+x*x*4+7*x*x+4*7*x", handleParanthesis(eq,location));
 }
+
+#endif
