@@ -8,6 +8,7 @@ SET(CMAKE_CXX_STANDARD 11)
 ADD_EXECUTABLE(test
     Graphing_Calculator/src/equation.cpp
 	Graphing_Calculator/src/Interpreter.cpp
+	Graphing_Calculator/src/handleOneVar.cpp
 	Testing/unit_test.cpp
 	
 )

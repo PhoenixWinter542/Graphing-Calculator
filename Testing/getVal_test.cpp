@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "../Graphing_Calculator/header/Interpreter.hpp"
-#include "../Graphing_Calculator/src/handleOneVar.cpp"
+#include "../Graphing_Calculator/header/handleOneVar.hpp"
 #include "../Graphing_Calculator/src/removeParenthesis.cpp"
 
 TEST(getVal, Add) {

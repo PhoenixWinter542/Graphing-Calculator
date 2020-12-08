@@ -4,6 +4,7 @@
 #include "getVal_test.cpp"			// need update
 #include "handlePara_test.cpp"		// infinite loop?
 #include "remove_spaces_test.cpp"	// works
+#include  "distrOp_test.cpp"
 
 
 int main(int argc, char **argv) {
