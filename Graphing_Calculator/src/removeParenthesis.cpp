@@ -1,8 +1,4 @@
-#ifndef __REMOVEPARENTHESIS_CPP__
-#define __REMOVEPARENTHESIS_CPP__
-
 #include "../header/removeParenthesis.hpp"
-#include "../header/equation.hpp"
 
 string removeSpaces(string eq);
 string findParenthesis(string eq);
@@ -428,13 +424,11 @@ string simplify(string eq)
 	return result;
 }
 
-// namespace removeParenthesis
-// {
-	string removeParenthesis::parse(string eq)
+namespace removeParenthesis
+{
+	string parse(string eq)
 	{
 		eq = removeSpaces(eq);
 		return findParenthesis(eq);
 	}
-// }
-
-#endif
+}

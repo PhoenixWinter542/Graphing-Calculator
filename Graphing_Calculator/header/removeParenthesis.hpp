@@ -1,8 +1,4 @@
-// #pragma once
-
-#ifndef __REMOVEPARENTHESIS_HPP__
-#define __REMOVEPARENTHESIS_HPP__
-
+#pragma once
 #include <string>
 #include <vector>
 #include "equation.hpp"
@@ -14,7 +10,3 @@ namespace removeParenthesis
 {
 	string parse(string eq);
 };
-
-
-
-#endif

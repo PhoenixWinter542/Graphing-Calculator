@@ -1,6 +1,3 @@
-#ifndef __HANDLEONEVAR_CPP__
-#define __HANDLEONEVAR_CPP__
-
 #include "../header/handleOneVar.hpp"
 #include <iostream>
 using std::cout;
@@ -29,5 +26,3 @@ string OneVar::enterVariable(string var)
 
 	return localEq;
 }
-
-#endif

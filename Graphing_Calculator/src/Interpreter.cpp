@@ -1,6 +1,3 @@
-#ifndef __INTERPRETER_CPP__
-#define __INTERPRETER_CPP__
-
 #include "../header/Interpreter.hpp"
 
 int Interpreter::howManyVars(string eq)
@@ -50,5 +47,3 @@ HandleVars* Interpreter::getParsedEquation(string eq)
 	}
 	return test;
 }
-
-#endif
