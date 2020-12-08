@@ -1,3 +1,11 @@
+#ifndef __DISTROP_TEST_CPP__
+#define __DISTROP_TEST_CPP__
+
+#include "gtest/gtest.h"
+#include "../Graphing_Calculator/header/Interpreter.hpp"
+#include "../Graphing_Calculator/header/handleNoVars.hpp"
+#include "../Graphing_Calculator/src/removeParenthesis.cpp"
+
 TEST(distrNeg,OneNeg) {
 	string eq = "-(2+3)";
 	EXPECT_EQ("-2-3", distributeNeg(eq));
@@ -67,3 +75,5 @@ TEST(distrPow, DubVar) {
 TEST(distrPow, DubVar) {
 	EXPECT_EQ("x^2+2*x+1","(x+1)^2");
 }
+
+#endif /*_DISTROP_TEST_CPP__*/
