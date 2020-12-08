@@ -1,3 +1,11 @@
+#ifndef __EDGE_CASES_HPP__
+#define __EDGE_CASES_HPP__
+
+#include "gtest/gtest.h"
+#include "interpreter.hpp"
+#include "interpreter.cpp"
+#include "handleOneVar.cpp"
+
 TEST(edgeCases, BaseVar) { 
     Interpreter* test = new Interpreter();
     HandleVars* result = test->getParsedEquation("x^x");
@@ -59,3 +67,5 @@ TEST(edgeCases, DigitRandomAlpha) {
     HandleVars* result = test->getParsedEquation("4asdads$");
     EXPECT_EQ(0,result->getPoint("5"));
 }
+
+#endif
